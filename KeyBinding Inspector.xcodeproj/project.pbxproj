@@ -1,0 +1,586 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		63F8913E2B2795D100F1572D /* KeyBindingInspectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */; };
+		63F891402B2795D100F1572D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8913F2B2795D100F1572D /* ContentView.swift */; };
+		63F891422B2795D200F1572D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63F891412B2795D200F1572D /* Assets.xcassets */; };
+		63F891452B2795D200F1572D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63F891442B2795D200F1572D /* Preview Assets.xcassets */; };
+		63F891502B2795D200F1572D /* KeyBinding_InspectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8914F2B2795D200F1572D /* KeyBinding_InspectorTests.swift */; };
+		63F8915A2B2795D200F1572D /* KeyBinding_InspectorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F891592B2795D200F1572D /* KeyBinding_InspectorUITests.swift */; };
+		63F8915C2B2795D200F1572D /* KeyBinding_InspectorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8915B2B2795D200F1572D /* KeyBinding_InspectorUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		63F8914C2B2795D200F1572D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63F891322B2795D100F1572D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63F891392B2795D100F1572D;
+			remoteInfo = "KeyBinding Inspector";
+		};
+		63F891562B2795D200F1572D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63F891322B2795D100F1572D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63F891392B2795D100F1572D;
+			remoteInfo = "KeyBinding Inspector";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		63F8913A2B2795D100F1572D /* KeyBinding Inspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KeyBinding Inspector.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindingInspectorApp.swift; sourceTree = "<group>"; };
+		63F8913F2B2795D100F1572D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		63F891412B2795D200F1572D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		63F891442B2795D200F1572D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		63F891462B2795D200F1572D /* KeyBinding_Inspector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KeyBinding_Inspector.entitlements; sourceTree = "<group>"; };
+		63F8914B2B2795D200F1572D /* KeyBinding InspectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KeyBinding InspectorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63F8914F2B2795D200F1572D /* KeyBinding_InspectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBinding_InspectorTests.swift; sourceTree = "<group>"; };
+		63F891552B2795D200F1572D /* KeyBinding InspectorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KeyBinding InspectorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63F891592B2795D200F1572D /* KeyBinding_InspectorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBinding_InspectorUITests.swift; sourceTree = "<group>"; };
+		63F8915B2B2795D200F1572D /* KeyBinding_InspectorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBinding_InspectorUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		63F891372B2795D100F1572D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63F891482B2795D200F1572D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63F891522B2795D200F1572D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		63F891312B2795D100F1572D = {
+			isa = PBXGroup;
+			children = (
+				63F8913C2B2795D100F1572D /* KeyBinding Inspector */,
+				63F8914E2B2795D200F1572D /* KeyBinding InspectorTests */,
+				63F891582B2795D200F1572D /* KeyBinding InspectorUITests */,
+				63F8913B2B2795D100F1572D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		63F8913B2B2795D100F1572D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				63F8913A2B2795D100F1572D /* KeyBinding Inspector.app */,
+				63F8914B2B2795D200F1572D /* KeyBinding InspectorTests.xctest */,
+				63F891552B2795D200F1572D /* KeyBinding InspectorUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		63F8913C2B2795D100F1572D /* KeyBinding Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */,
+				63F8913F2B2795D100F1572D /* ContentView.swift */,
+				63F891412B2795D200F1572D /* Assets.xcassets */,
+				63F891462B2795D200F1572D /* KeyBinding_Inspector.entitlements */,
+				63F891432B2795D200F1572D /* Preview Content */,
+			);
+			path = "KeyBinding Inspector";
+			sourceTree = "<group>";
+		};
+		63F891432B2795D200F1572D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				63F891442B2795D200F1572D /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		63F8914E2B2795D200F1572D /* KeyBinding InspectorTests */ = {
+			isa = PBXGroup;
+			children = (
+				63F8914F2B2795D200F1572D /* KeyBinding_InspectorTests.swift */,
+			);
+			path = "KeyBinding InspectorTests";
+			sourceTree = "<group>";
+		};
+		63F891582B2795D200F1572D /* KeyBinding InspectorUITests */ = {
+			isa = PBXGroup;
+			children = (
+				63F891592B2795D200F1572D /* KeyBinding_InspectorUITests.swift */,
+				63F8915B2B2795D200F1572D /* KeyBinding_InspectorUITestsLaunchTests.swift */,
+			);
+			path = "KeyBinding InspectorUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		63F891392B2795D100F1572D /* KeyBinding Inspector */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63F8915F2B2795D200F1572D /* Build configuration list for PBXNativeTarget "KeyBinding Inspector" */;
+			buildPhases = (
+				63F891362B2795D100F1572D /* Sources */,
+				63F891372B2795D100F1572D /* Frameworks */,
+				63F891382B2795D100F1572D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "KeyBinding Inspector";
+			productName = "KeyBinding Inspector";
+			productReference = 63F8913A2B2795D100F1572D /* KeyBinding Inspector.app */;
+			productType = "com.apple.product-type.application";
+		};
+		63F8914A2B2795D200F1572D /* KeyBinding InspectorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63F891622B2795D200F1572D /* Build configuration list for PBXNativeTarget "KeyBinding InspectorTests" */;
+			buildPhases = (
+				63F891472B2795D200F1572D /* Sources */,
+				63F891482B2795D200F1572D /* Frameworks */,
+				63F891492B2795D200F1572D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				63F8914D2B2795D200F1572D /* PBXTargetDependency */,
+			);
+			name = "KeyBinding InspectorTests";
+			productName = "KeyBinding InspectorTests";
+			productReference = 63F8914B2B2795D200F1572D /* KeyBinding InspectorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		63F891542B2795D200F1572D /* KeyBinding InspectorUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63F891652B2795D200F1572D /* Build configuration list for PBXNativeTarget "KeyBinding InspectorUITests" */;
+			buildPhases = (
+				63F891512B2795D200F1572D /* Sources */,
+				63F891522B2795D200F1572D /* Frameworks */,
+				63F891532B2795D200F1572D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				63F891572B2795D200F1572D /* PBXTargetDependency */,
+			);
+			name = "KeyBinding InspectorUITests";
+			productName = "KeyBinding InspectorUITests";
+			productReference = 63F891552B2795D200F1572D /* KeyBinding InspectorUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		63F891322B2795D100F1572D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					63F891392B2795D100F1572D = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					63F8914A2B2795D200F1572D = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = 63F891392B2795D100F1572D;
+					};
+					63F891542B2795D200F1572D = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = 63F891392B2795D100F1572D;
+					};
+				};
+			};
+			buildConfigurationList = 63F891352B2795D100F1572D /* Build configuration list for PBXProject "KeyBinding Inspector" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 63F891312B2795D100F1572D;
+			productRefGroup = 63F8913B2B2795D100F1572D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				63F891392B2795D100F1572D /* KeyBinding Inspector */,
+				63F8914A2B2795D200F1572D /* KeyBinding InspectorTests */,
+				63F891542B2795D200F1572D /* KeyBinding InspectorUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		63F891382B2795D100F1572D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63F891452B2795D200F1572D /* Preview Assets.xcassets in Resources */,
+				63F891422B2795D200F1572D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63F891492B2795D200F1572D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63F891532B2795D200F1572D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		63F891362B2795D100F1572D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63F891402B2795D100F1572D /* ContentView.swift in Sources */,
+				63F8913E2B2795D100F1572D /* KeyBindingInspectorApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63F891472B2795D200F1572D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63F891502B2795D200F1572D /* KeyBinding_InspectorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63F891512B2795D200F1572D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63F8915C2B2795D200F1572D /* KeyBinding_InspectorUITestsLaunchTests.swift in Sources */,
+				63F8915A2B2795D200F1572D /* KeyBinding_InspectorUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		63F8914D2B2795D200F1572D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63F891392B2795D100F1572D /* KeyBinding Inspector */;
+			targetProxy = 63F8914C2B2795D200F1572D /* PBXContainerItemProxy */;
+		};
+		63F891572B2795D200F1572D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63F891392B2795D100F1572D /* KeyBinding Inspector */;
+			targetProxy = 63F891562B2795D200F1572D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		63F8915D2B2795D200F1572D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		63F8915E2B2795D200F1572D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		63F891602B2795D200F1572D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "KeyBinding Inspector/KeyBinding_Inspector.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"KeyBinding Inspector/Preview Content\"";
+				DEVELOPMENT_TEAM = 9K689XE65M;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "is.dave.KeyBinding-Inspector";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		63F891612B2795D200F1572D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "KeyBinding Inspector/KeyBinding_Inspector.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"KeyBinding Inspector/Preview Content\"";
+				DEVELOPMENT_TEAM = 9K689XE65M;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "is.dave.KeyBinding-Inspector";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		63F891632B2795D200F1572D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9K689XE65M;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "is.dave.KeyBinding-InspectorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KeyBinding Inspector.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KeyBinding Inspector";
+			};
+			name = Debug;
+		};
+		63F891642B2795D200F1572D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9K689XE65M;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "is.dave.KeyBinding-InspectorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KeyBinding Inspector.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KeyBinding Inspector";
+			};
+			name = Release;
+		};
+		63F891662B2795D200F1572D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9K689XE65M;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "is.dave.KeyBinding-InspectorUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "KeyBinding Inspector";
+			};
+			name = Debug;
+		};
+		63F891672B2795D200F1572D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9K689XE65M;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "is.dave.KeyBinding-InspectorUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "KeyBinding Inspector";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		63F891352B2795D100F1572D /* Build configuration list for PBXProject "KeyBinding Inspector" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63F8915D2B2795D200F1572D /* Debug */,
+				63F8915E2B2795D200F1572D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63F8915F2B2795D200F1572D /* Build configuration list for PBXNativeTarget "KeyBinding Inspector" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63F891602B2795D200F1572D /* Debug */,
+				63F891612B2795D200F1572D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63F891622B2795D200F1572D /* Build configuration list for PBXNativeTarget "KeyBinding InspectorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63F891632B2795D200F1572D /* Debug */,
+				63F891642B2795D200F1572D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63F891652B2795D200F1572D /* Build configuration list for PBXNativeTarget "KeyBinding InspectorUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63F891662B2795D200F1572D /* Debug */,
+				63F891672B2795D200F1572D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 63F891322B2795D100F1572D /* Project object */;
+}

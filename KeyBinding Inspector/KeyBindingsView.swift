@@ -216,7 +216,7 @@ struct KeyBindingsView: View {
 
     var body: some View {
         Table(document.keyBindings, sortOrder: $sortOrder) {
-            TableColumn("", value: \.modifiers) {
+            TableColumn("") {
                 Text($0.modifiers)
                     .padding(0)
             }

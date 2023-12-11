@@ -195,6 +195,10 @@ struct KeyBindingsView: View {
 
     @Binding var document: KeyBindingsDocument
 
+    var keyBindings: [KeyBinding] {
+        document.keyBindings.sorted(using: sortOrder)
+    }
+
 //    @State var keyBindings: [KeyBinding] = {
 //        let url = URL(fileURLWithPath: "/System/Library/Frameworks/AppKit.framework/Resources/StandardKeyBinding.dict")
 //        let data = try! Data(contentsOf: url)
@@ -215,7 +219,7 @@ struct KeyBindingsView: View {
 //    }()
 
     var body: some View {
-        Table(document.keyBindings, sortOrder: $sortOrder) {
+        Table(keyBindings, sortOrder: $sortOrder) {
             TableColumn("") {
                 Text($0.modifiers)
                     .padding(0)
@@ -226,9 +230,6 @@ struct KeyBindingsView: View {
 
             TableColumn("Key", value: \.keyWithoutModifiers)
             TableColumn("Action", value: \.formattedActions)
-        }
-        .onChange(of: sortOrder) {
-            document.keyBindings.sort(using: sortOrder)
         }
     }
 }

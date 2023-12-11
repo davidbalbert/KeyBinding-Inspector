@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		63F8913E2B2795D100F1572D /* KeyBindingInspectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */; };
-		63F891402B2795D100F1572D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8913F2B2795D100F1572D /* ContentView.swift */; };
+		63F891402B2795D100F1572D /* KeyBindingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8913F2B2795D100F1572D /* KeyBindingsView.swift */; };
 		63F891422B2795D200F1572D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63F891412B2795D200F1572D /* Assets.xcassets */; };
 		63F891452B2795D200F1572D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63F891442B2795D200F1572D /* Preview Assets.xcassets */; };
 		63F891502B2795D200F1572D /* KeyBinding_InspectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8914F2B2795D200F1572D /* KeyBinding_InspectorTests.swift */; };
@@ -36,7 +36,7 @@
 /* Begin PBXFileReference section */
 		63F8913A2B2795D100F1572D /* KeyBinding Inspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KeyBinding Inspector.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindingInspectorApp.swift; sourceTree = "<group>"; };
-		63F8913F2B2795D100F1572D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		63F8913F2B2795D100F1572D /* KeyBindingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindingsView.swift; sourceTree = "<group>"; };
 		63F891412B2795D200F1572D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63F891442B2795D200F1572D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		63F891462B2795D200F1572D /* KeyBinding_Inspector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KeyBinding_Inspector.entitlements; sourceTree = "<group>"; };
@@ -45,6 +45,7 @@
 		63F891552B2795D200F1572D /* KeyBinding InspectorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KeyBinding InspectorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F891592B2795D200F1572D /* KeyBinding_InspectorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBinding_InspectorUITests.swift; sourceTree = "<group>"; };
 		63F8915B2B2795D200F1572D /* KeyBinding_InspectorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBinding_InspectorUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		63F891682B27BCA300F1572D /* KeyBinding-Inspector-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "KeyBinding-Inspector-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +96,9 @@
 		63F8913C2B2795D100F1572D /* KeyBinding Inspector */ = {
 			isa = PBXGroup;
 			children = (
+				63F891682B27BCA300F1572D /* KeyBinding-Inspector-Info.plist */,
 				63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */,
-				63F8913F2B2795D100F1572D /* ContentView.swift */,
+				63F8913F2B2795D100F1572D /* KeyBindingsView.swift */,
 				63F891412B2795D200F1572D /* Assets.xcassets */,
 				63F891462B2795D200F1572D /* KeyBinding_Inspector.entitlements */,
 				63F891432B2795D200F1572D /* Preview Content */,
@@ -259,7 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63F891402B2795D100F1572D /* ContentView.swift in Sources */,
+				63F891402B2795D100F1572D /* KeyBindingsView.swift in Sources */,
 				63F8913E2B2795D100F1572D /* KeyBindingInspectorApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,6 +431,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "KeyBinding-Inspector-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -456,6 +459,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "KeyBinding-Inspector-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

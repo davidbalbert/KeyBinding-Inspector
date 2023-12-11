@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  KeyBindingsView.swift
 //  KeyBinding Inspector
 //
 //  Created by David Albert on 12/11/23.
@@ -190,30 +190,32 @@ struct KeyBinding: Identifiable {
     }
 }
 
-struct ContentView: View {
+struct KeyBindingsView: View {
     @State private var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
 
-    @State var keyBindings: [KeyBinding] = {
-        let url = URL(fileURLWithPath: "/System/Library/Frameworks/AppKit.framework/Resources/StandardKeyBinding.dict")
-        let data = try! Data(contentsOf: url)
-        let plist = try! PropertyListSerialization.propertyList(from: data, options: [], format: nil)
-        let dict = plist as! [String: Any]
+    @Binding var document: KeyBindingsDocument
 
-        return dict.map { (key, value) in
-            let actions: [String]
-            if let s = value as? String {
-                actions = [s]
-            } else if let a = value as? [String] {
-                actions = a
-            } else {
-                actions = []
-            }
-            return KeyBinding(key: key, actions: actions)
-        }
-    }()
+//    @State var keyBindings: [KeyBinding] = {
+//        let url = URL(fileURLWithPath: "/System/Library/Frameworks/AppKit.framework/Resources/StandardKeyBinding.dict")
+//        let data = try! Data(contentsOf: url)
+//        let plist = try! PropertyListSerialization.propertyList(from: data, options: [], format: nil)
+//        let dict = plist as! [String: Any]
+//
+//        return dict.map { (key, value) in
+//            let actions: [String]
+//            if let s = value as? String {
+//                actions = [s]
+//            } else if let a = value as? [String] {
+//                actions = a
+//            } else {
+//                actions = []
+//            }
+//            return KeyBinding(key: key, actions: actions)
+//        }
+//    }()
 
     var body: some View {
-        Table(keyBindings, sortOrder: $sortOrder) {
+        Table(document.keyBindings, sortOrder: $sortOrder) {
             TableColumn("", value: \.modifiers) {
                 Text($0.modifiers)
                     .padding(0)
@@ -226,11 +228,11 @@ struct ContentView: View {
             TableColumn("Action", value: \.formattedActions)
         }
         .onChange(of: sortOrder) {
-            keyBindings.sort(using: sortOrder)
+            document.keyBindings.sort(using: sortOrder)
         }
     }
 }
 
 #Preview {
-    ContentView()
+    KeyBindingsView(document: .constant(KeyBindingsDocument()))
 }

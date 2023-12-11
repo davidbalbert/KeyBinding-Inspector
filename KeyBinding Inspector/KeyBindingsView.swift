@@ -193,7 +193,7 @@ struct KeyBinding: Identifiable {
 struct KeyBindingsView: View {
     @State private var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
 
-    @Binding var document: KeyBindingsDocument
+    var document: KeyBindingsDocument
 
     var keyBindings: [KeyBinding] {
         document.keyBindings.sorted(using: sortOrder)
@@ -235,5 +235,5 @@ struct KeyBindingsView: View {
 }
 
 #Preview {
-    KeyBindingsView(document: .constant(KeyBindingsDocument()))
+    KeyBindingsView(document: KeyBindingsDocument())
 }

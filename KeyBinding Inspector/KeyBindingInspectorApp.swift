@@ -76,8 +76,8 @@ struct KeyBindingsDocument: FileDocument {
 @main
 struct KeyBindingInspectorApp: App {
     var body: some Scene {
-        DocumentGroup(newDocument: KeyBindingsDocument()) { configuration in
-            KeyBindingsView(document: configuration.$document)
+        DocumentGroup(viewing: KeyBindingsDocument.self) { configuration in
+            KeyBindingsView(document: configuration.document)
         }
     }
 }

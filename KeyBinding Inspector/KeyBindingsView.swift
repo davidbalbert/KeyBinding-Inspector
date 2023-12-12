@@ -20,12 +20,14 @@ struct KeyBindingsView: View {
     }
 
     var filteredKeyBindings: [KeyBinding] {
-        if !query.isEmpty {
-            keyBindings.filter {
-                $0.keyWithoutModifiers.localizedCaseInsensitiveContains(query) || $0.actions.contains(where: { $0.localizedCaseInsensitiveContains(query )})
-            }
-        } else {
-            keyBindings
+        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if q.isEmpty {
+            return keyBindings
+        }
+
+        return keyBindings.filter {
+            $0.keyWithoutModifiers.localizedCaseInsensitiveContains(q) || $0.actions.contains(where: { $0.localizedCaseInsensitiveContains(q)})
         }
     }
 

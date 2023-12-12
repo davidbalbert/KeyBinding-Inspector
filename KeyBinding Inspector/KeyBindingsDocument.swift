@@ -12,11 +12,12 @@ extension UTType {
     static let keyBindings = UTType(exportedAs: "is.dave.keybinding-inspector.key-bindings")
 }
 
-struct KeyBindingsDocument: FileDocument {
+struct KeyBindingsDocument: FileDocument, Equatable {
     var keyBindings: [KeyBinding]
 
     enum Errors: Error {
         case missingAction
+        case writeNotSupported
     }
 
     static var readableContentTypes: [UTType] = [.keyBindings]
@@ -25,11 +26,7 @@ struct KeyBindingsDocument: FileDocument {
         self.keyBindings = []
     }
 
-    init(configuration: ReadConfiguration) throws {
-        guard let data = configuration.file.regularFileContents else {
-            throw CocoaError(.fileReadCorruptFile)
-        }
-
+    init(data: Data) throws {
         guard let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) else {
             throw CocoaError(.fileReadCorruptFile)
         }
@@ -49,6 +46,14 @@ struct KeyBindingsDocument: FileDocument {
             }
             return KeyBinding(key: key, actions: actions)
         }
+    }
+
+    init(configuration: ReadConfiguration) throws {
+        guard let data = configuration.file.regularFileContents else {
+            throw CocoaError(.fileReadCorruptFile)
+        }
+
+        try self.init(data: data)
     }
 
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {

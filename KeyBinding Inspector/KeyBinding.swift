@@ -129,7 +129,7 @@ let controlCharacters: [Int: String] = [
     0x7f: "Del",
 ]
 
-struct KeyBinding: Identifiable {
+struct KeyBinding: Identifiable, Equatable {
     var key: String
     var actions: [String]
 

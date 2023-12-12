@@ -8,49 +8,74 @@
 import SwiftUI
 
 struct KeyBindingsView: View {
-    @State private var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
+    let document: KeyBindingsDocument
+    let url: URL?
 
-    var document: KeyBindingsDocument
+    @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
+    @State var keyBindings: [KeyBinding] = []
+    @State var fileWatcher: FileWatcher? = nil
 
-    var keyBindings: [KeyBinding] {
-        document.keyBindings.sorted(using: sortOrder)
+    func sortKeyBindings() {
+        keyBindings = keyBindings.sorted { $0.modifiers.count < $1.modifiers.count }.sorted(using: sortOrder)
     }
 
-//    @State var keyBindings: [KeyBinding] = {
-//        let url = URL(fileURLWithPath: "/System/Library/Frameworks/AppKit.framework/Resources/StandardKeyBinding.dict")
-//        let data = try! Data(contentsOf: url)
-//        let plist = try! PropertyListSerialization.propertyList(from: data, options: [], format: nil)
-//        let dict = plist as! [String: Any]
-//
-//        return dict.map { (key, value) in
-//            let actions: [String]
-//            if let s = value as? String {
-//                actions = [s]
-//            } else if let a = value as? [String] {
-//                actions = a
-//            } else {
-//                actions = []
-//            }
-//            return KeyBinding(key: key, actions: actions)
-//        }
-//    }()
+    func startWatching() {
+        guard let url else {
+            return
+        }
+
+        let watcher = FileWatcher(url: url) {
+            do {
+                let data = try await Data(asyncContentsOf: url)
+                keyBindings = try KeyBindingsDocument(data: data).keyBindings
+                sortKeyBindings()
+            } catch {
+                print("Failed to reload file", url, error)
+            }
+        }
+
+        NSFileCoordinator.addFilePresenter(watcher)
+        fileWatcher = watcher
+    }
+
+    func stopWatching() {
+        if let fileWatcher {
+            NSFileCoordinator.removeFilePresenter(fileWatcher)
+            self.fileWatcher = nil
+        }
+    }
 
     var body: some View {
         Table(keyBindings, sortOrder: $sortOrder) {
-            TableColumn("") {
-                Text($0.modifiers)
-                    .padding(0)
-            }
-            .width(max: 40)
-            .alignment(.trailing)
-            .disabledCustomizationBehavior(.resize)
+            TableColumn("Key", value: \.keyWithoutModifiers) { b in
+                HStack {
+                    HStack {
+                        Spacer()
+                        Text(b.modifiers)
+                    }
+                    .frame(width: 50, alignment: .trailing)
 
-            TableColumn("Key", value: \.keyWithoutModifiers)
+                    Text(b.keyWithoutModifiers)
+                }
+            }
             TableColumn("Action", value: \.formattedActions)
         }
+        .onChange(of: sortOrder) {
+            sortKeyBindings()
+        }
+        .onChange(of: document) {
+            keyBindings = document.keyBindings
+            sortKeyBindings()
+        }
+        .onAppear {
+            keyBindings = document.keyBindings
+            sortKeyBindings()
+            startWatching()
+        }
+        .onDisappear(perform: stopWatching)
     }
 }
 
 #Preview {
-    KeyBindingsView(document: KeyBindingsDocument())
+    try! KeyBindingsView(document: KeyBindingsDocument(data: Data(contentsOf: systemKeyBindingsURL)), url: systemKeyBindingsURL)
 }

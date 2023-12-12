@@ -100,13 +100,13 @@
 		63F8913C2B2795D100F1572D /* KeyBinding Inspector */ = {
 			isa = PBXGroup;
 			children = (
+				63F891462B2795D200F1572D /* KeyBinding_Inspector.entitlements */,
 				63F891682B27BCA300F1572D /* KeyBinding-Inspector-Info.plist */,
+				63F8916B2B27D65500F1572D /* KeyBinding.swift */,
 				63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */,
 				63F891692B27D63500F1572D /* KeyBindingsDocument.swift */,
 				63F8913F2B2795D100F1572D /* KeyBindingsView.swift */,
-				63F8916B2B27D65500F1572D /* KeyBinding.swift */,
 				63F891412B2795D200F1572D /* Assets.xcassets */,
-				63F891462B2795D200F1572D /* KeyBinding_Inspector.entitlements */,
 				63F891432B2795D200F1572D /* Preview Content */,
 			);
 			path = "KeyBinding Inspector";

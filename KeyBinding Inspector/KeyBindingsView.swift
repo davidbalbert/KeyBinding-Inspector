@@ -103,8 +103,11 @@ struct KeyBindingsView: View {
                                 .textFieldStyle(.accessoryBarSearchField)
                                 .keyboardShortcut("f")
                                 .focused($searchFieldFocused, equals: true)
+                                .onKeyPress(.escape) {
+                                    showingAccessoryBar = false
+                                    return .handled
+                                }
                             Button("Done") {
-                                searchFieldFocused = false
                                 showingAccessoryBar = false
                             }
                             .font(.callout)

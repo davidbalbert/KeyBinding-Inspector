@@ -13,36 +13,9 @@ struct KeyBindingsView: View {
 
     @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
     @State var keyBindings: [KeyBinding] = []
-    @State var fileWatcher: FileWatcher? = nil
 
     func sortKeyBindings() {
         keyBindings = keyBindings.sorted { $0.modifiers.count < $1.modifiers.count }.sorted(using: sortOrder)
-    }
-
-    func startWatching() {
-        guard let url else {
-            return
-        }
-
-        let watcher = FileWatcher(url: url) {
-            do {
-                let data = try await Data(asyncContentsOf: url)
-                keyBindings = try KeyBindingsDocument(data: data).keyBindings
-                sortKeyBindings()
-            } catch {
-                print("Failed to reload file", url, error)
-            }
-        }
-
-        NSFileCoordinator.addFilePresenter(watcher)
-        fileWatcher = watcher
-    }
-
-    func stopWatching() {
-        if let fileWatcher {
-            NSFileCoordinator.removeFilePresenter(fileWatcher)
-            self.fileWatcher = nil
-        }
     }
 
     var body: some View {
@@ -70,9 +43,18 @@ struct KeyBindingsView: View {
         .onAppear {
             keyBindings = document.keyBindings
             sortKeyBindings()
-            startWatching()
         }
-        .onDisappear(perform: stopWatching)
+        .onChangeOfFile(at: url) { url in
+            Task {
+                do {
+                    let data = try await Data(asyncContentsOf: url)
+                    keyBindings = try KeyBindingsDocument(data: data).keyBindings
+                    sortKeyBindings()
+                } catch {
+                    print("Failed to reload file", url, error)
+                }
+            }
+        }
     }
 }
 

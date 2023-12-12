@@ -5,25 +5,57 @@
 //  Created by David Albert on 12/12/23.
 //
 
-import Foundation
+import SwiftUI
 
 class FileWatcher: NSObject, NSFilePresenter {
     let url: URL
-    let action: () async -> Void
+    let action: () -> Void
+
+    init(url: URL, perform action: @escaping () -> Void) {
+        self.url = url
+        self.action = action
+    }
 
     var presentedItemURL: URL? { url }
     var presentedItemOperationQueue: OperationQueue {
         OperationQueue.main
     }
 
-    init(url: URL, action: @escaping () async -> Void) {
-        self.url = url
-        self.action = action
+    func presentedItemDidChange() {
+        action()
+    }
+}
+
+struct WatchFile: ViewModifier {
+    let fileWatcher: FileWatcher
+
+    init(url: URL, perform action: @escaping (URL) -> Void) {
+        fileWatcher = FileWatcher(url: url) {
+            action(url)
+        }
     }
 
-    func presentedItemDidChange() {
-        Task {
-            await action()
+    func body(content: Content) -> some View {
+        content
+            .background {
+                Color.clear
+                    .onAppear {
+                        NSFileCoordinator.addFilePresenter(fileWatcher)
+                    }
+                    .onDisappear {
+                        NSFileCoordinator.removeFilePresenter(fileWatcher)
+                    }
+            }
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func onChangeOfFile(at url: URL?, perform action: @escaping (URL) -> Void) -> some View {
+        if let url {
+            modifier(WatchFile(url: url, perform: action))
+        } else {
+            self
         }
     }
 }

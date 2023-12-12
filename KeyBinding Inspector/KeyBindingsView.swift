@@ -15,20 +15,20 @@ struct KeyBindingsView: View {
     @State var keyBindings: [KeyBinding] = []
     @State var query: String = ""
 
-    func sortKeyBindings() {
-        keyBindings = keyBindings.sorted { $0.modifiers.count < $1.modifiers.count }.sorted(using: sortOrder)
-    }
-
     var filteredKeyBindings: [KeyBinding] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        if q.isEmpty {
-            return keyBindings
+        var bindings = keyBindings
+        if !q.isEmpty {
+            bindings.removeAll {
+                !$0.keyWithoutModifiers.localizedCaseInsensitiveContains(q) && !$0.actions.contains(where: { $0.localizedCaseInsensitiveContains(q)})
+            }
         }
 
-        return keyBindings.filter {
-            $0.keyWithoutModifiers.localizedCaseInsensitiveContains(q) || $0.actions.contains(where: { $0.localizedCaseInsensitiveContains(q)})
-        }
+        bindings.sort { $0.modifiers.count < $1.modifiers.count }
+        bindings.sort(using: sortOrder)
+
+        return bindings
     }
 
     var body: some View {
@@ -47,23 +47,17 @@ struct KeyBindingsView: View {
             TableColumn("Action", value: \.formattedActions)
         }
         .searchable(text: $query)
-        .onChange(of: sortOrder) {
-            sortKeyBindings()
-        }
         .onChange(of: document) {
             keyBindings = document.keyBindings
-            sortKeyBindings()
         }
         .onAppear {
             keyBindings = document.keyBindings
-            sortKeyBindings()
         }
         .onChangeOfFile(at: url) { url in
             Task {
                 do {
                     let data = try await Data(asyncContentsOf: url)
                     keyBindings = try KeyBindingsDocument(data: data).keyBindings
-                    sortKeyBindings()
                 } catch {
                     print("Failed to reload file", url, error)
                 }

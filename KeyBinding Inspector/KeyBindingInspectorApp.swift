@@ -51,12 +51,14 @@ struct KeyBindingInspectorApp: App {
                         try await openDocument(at: systemKeyBindingsURL)
                     }
                 }
+                .keyboardShortcut("o", modifiers: [.command, .option])
 
                 Button("Open User Key Bindings") {
                      Task {
                          try await openDocument(at: userKeyBindingsURL!)
                      }
                 }
+                .keyboardShortcut("o", modifiers: [.command, .shift, .option])
                 .disabled(!userKeyBindingsExists)
             }
         }

@@ -13,13 +13,24 @@ struct KeyBindingsView: View {
 
     @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
     @State var keyBindings: [KeyBinding] = []
+    @State var query: String = ""
 
     func sortKeyBindings() {
         keyBindings = keyBindings.sorted { $0.modifiers.count < $1.modifiers.count }.sorted(using: sortOrder)
     }
 
+    var filteredKeyBindings: [KeyBinding] {
+        if !query.isEmpty {
+            keyBindings.filter {
+                $0.keyWithoutModifiers.localizedCaseInsensitiveContains(query) || $0.actions.contains(where: { $0.localizedCaseInsensitiveContains(query )})
+            }
+        } else {
+            keyBindings
+        }
+    }
+
     var body: some View {
-        Table(keyBindings, sortOrder: $sortOrder) {
+        Table(filteredKeyBindings, sortOrder: $sortOrder) {
             TableColumn("Key", value: \.keyWithoutModifiers) { b in
                 HStack {
                     HStack {
@@ -33,6 +44,7 @@ struct KeyBindingsView: View {
             }
             TableColumn("Action", value: \.formattedActions)
         }
+        .searchable(text: $query)
         .onChange(of: sortOrder) {
             sortKeyBindings()
         }

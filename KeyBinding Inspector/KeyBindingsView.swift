@@ -7,6 +7,42 @@
 
 import SwiftUI
 
+struct AccessoryBarSearchTextFieldStyle: TextFieldStyle {
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        ZStack {
+            HStack(spacing: 3.0) {
+                Image(systemName: "magnifyingglass")
+                configuration
+                    .textFieldStyle(.plain)
+            }
+            .padding([.leading, .trailing], 5.0)
+            RoundedRectangle(cornerRadius: 5.0)
+                .stroke(.quaternary)
+                .frame(height: 22)
+        }
+    }
+}
+
+extension TextFieldStyle where Self == AccessoryBarSearchTextFieldStyle {
+    static var accessoryBarSearchField: AccessoryBarSearchTextFieldStyle { AccessoryBarSearchTextFieldStyle() }
+}
+
+struct ScopeBar<Content>: View where Content: View {
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        VStack(spacing: 0) {
+            content()
+                // Visual height is 28, but height == 27 + 1 point of top padding
+                // balances the extra point added by the Divider
+                .frame(height: 27)
+                .padding(EdgeInsets(top: 1, leading: 5, bottom: 0, trailing: 5))
+            Divider()
+        }
+        .background(.white)
+    }
+}
+
 struct KeyBindingsView: View {
     let document: KeyBindingsDocument
     let url: URL?
@@ -14,6 +50,8 @@ struct KeyBindingsView: View {
     @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
     @State var keyBindings: [KeyBinding] = []
     @State var query: String = ""
+
+    @State var isSearching: Bool = true
 
     var filteredKeyBindings: [KeyBinding] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -32,21 +70,40 @@ struct KeyBindingsView: View {
     }
 
     var body: some View {
-        Table(filteredKeyBindings, sortOrder: $sortOrder) {
-            TableColumn("Key", value: \.keyWithoutModifiers) { b in
-                HStack {
+        VStack(spacing: 0) {
+            if isSearching {
+                ScopeBar {
                     HStack {
-                        Spacer()
-                        Text(b.modifiers)
+                        TextField("Search", text: $query)
+                            .textFieldStyle(.accessoryBarSearchField)
+                            .keyboardShortcut("f")
+                        Button("Done") {
+                            withAnimation(.easeInOut(duration: 0.1)) {
+                                isSearching = false
+                            }
+                        }
+                        .font(.callout)
+                        .buttonStyle(.accessoryBarAction)
                     }
-                    .frame(width: 50, alignment: .trailing)
-
-                    Text(b.keyWithoutModifiers)
                 }
+                .transition(.move(edge: .top))
             }
-            TableColumn("Action", value: \.formattedActions)
+
+            Table(filteredKeyBindings, sortOrder: $sortOrder) {
+                TableColumn("Key", value: \.keyWithoutModifiers) { b in
+                    HStack {
+                        HStack {
+                            Spacer()
+                            Text(b.modifiers)
+                        }
+                        .frame(width: 50, alignment: .trailing)
+
+                        Text(b.keyWithoutModifiers)
+                    }
+                }
+                TableColumn("Action", value: \.formattedActions)
+            }
         }
-        .searchable(text: $query)
         .onChange(of: document) {
             keyBindings = document.keyBindings
         }

@@ -27,7 +27,7 @@ extension TextFieldStyle where Self == AccessoryBarSearchTextFieldStyle {
     static var accessoryBarSearchField: AccessoryBarSearchTextFieldStyle { AccessoryBarSearchTextFieldStyle() }
 }
 
-struct ScopeBar<Content>: View where Content: View {
+struct AccessoryBar<Content>: View where Content: View {
     @ViewBuilder let content: () -> Content
 
     var body: some View {
@@ -72,7 +72,7 @@ struct KeyBindingsView: View {
     var body: some View {
         VStack(spacing: 0) {
             if isSearching {
-                ScopeBar {
+                AccessoryBar {
                     HStack {
                         TextField("Search", text: $query)
                             .textFieldStyle(.accessoryBarSearchField)

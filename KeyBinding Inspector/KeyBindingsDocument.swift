@@ -57,21 +57,23 @@ struct KeyBindingsDocument: FileDocument, Equatable {
     }
 
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let seq = try keyBindings.map { b in
-            let value: Any
-            if b.actions.isEmpty {
-                throw Errors.missingAction
-            } else if b.actions.count == 1 {
-                value = b.actions[0]
-            } else {
-                value = b.actions
-            }
+        throw CocoaError(.fileWriteNoPermission)
 
-            return (b.key, value)
-        }
-
-        let plist = Dictionary(seq) { a, b in b }
-        return FileWrapper(regularFileWithContents: try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0))
+//        let seq = try keyBindings.map { b in
+//            let value: Any
+//            if b.actions.isEmpty {
+//                throw Errors.missingAction
+//            } else if b.actions.count == 1 {
+//                value = b.actions[0]
+//            } else {
+//                value = b.actions
+//            }
+//
+//            return (b.key, value)
+//        }
+//
+//        let plist = Dictionary(seq) { a, b in b }
+//        return FileWrapper(regularFileWithContents: try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0))
     }
 }
 

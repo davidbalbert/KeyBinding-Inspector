@@ -43,6 +43,29 @@ struct AccessoryBar<Content>: View where Content: View {
     }
 }
 
+struct SearchFieldFocusedKey: FocusedValueKey {
+    typealias Value = FocusState<Bool>.Binding
+}
+
+extension FocusedValues {
+    var searchFieldFocused: SearchFieldFocusedKey.Value? {
+        get { self[SearchFieldFocusedKey.self] }
+        set { self[SearchFieldFocusedKey.self] = newValue }
+    }
+}
+
+struct ShowingAccessoryBarKey: FocusedValueKey {
+    typealias Value = Binding<Bool>
+}
+
+extension FocusedValues {
+    var showingAccessoryBar: ShowingAccessoryBarKey.Value? {
+        get { self[ShowingAccessoryBarKey.self] }
+        set { self[ShowingAccessoryBarKey.self] = newValue}
+    }
+}
+
+
 struct KeyBindingsView: View {
     let document: KeyBindingsDocument
     let url: URL?
@@ -51,7 +74,8 @@ struct KeyBindingsView: View {
     @State var keyBindings: [KeyBinding] = []
     @State var query: String = ""
 
-    @State var isSearching: Bool = true
+    @State var showingAccessoryBar: Bool = false
+    @FocusState var searchFieldFocused: Bool
 
     var filteredKeyBindings: [KeyBinding] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -71,22 +95,24 @@ struct KeyBindingsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if isSearching {
-                AccessoryBar {
-                    HStack {
-                        TextField("Search", text: $query)
-                            .textFieldStyle(.accessoryBarSearchField)
-                            .keyboardShortcut("f")
-                        Button("Done") {
-                            withAnimation(.easeInOut(duration: 0.1)) {
-                                isSearching = false
+            HStack {
+                if showingAccessoryBar {
+                    AccessoryBar {
+                        HStack {
+                            TextField("Search", text: $query)
+                                .textFieldStyle(.accessoryBarSearchField)
+                                .keyboardShortcut("f")
+                                .focused($searchFieldFocused, equals: true)
+                            Button("Done") {
+                                searchFieldFocused = false
+                                showingAccessoryBar = false
                             }
+                            .font(.callout)
+                            .buttonStyle(.accessoryBarAction)
                         }
-                        .font(.callout)
-                        .buttonStyle(.accessoryBarAction)
                     }
+                    .transition(.move(edge: .top))
                 }
-                .transition(.move(edge: .top))
             }
 
             Table(filteredKeyBindings, sortOrder: $sortOrder) {
@@ -104,6 +130,9 @@ struct KeyBindingsView: View {
                 TableColumn("Action", value: \.formattedActions)
             }
         }
+        .focusedSceneValue(\.showingAccessoryBar, $showingAccessoryBar)
+        .focusedSceneValue(\.searchFieldFocused, $searchFieldFocused)
+        .animation(.easeInOut(duration: 0.1), value: showingAccessoryBar)
         .onChange(of: document) {
             keyBindings = document.keyBindings
         }

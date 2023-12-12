@@ -25,6 +25,9 @@ struct KeyBindingInspectorApp: App {
     @NSApplicationDelegateAdaptor var appDelegate: AppDelegate
     @Environment(\.openDocument) var openDocument
 
+    @FocusedValue(\.searchFieldFocused) var searchFieldFocused: FocusState<Bool>.Binding?
+    @FocusedBinding(\.showingAccessoryBar) var showingAccessoryBar: Bool?
+
     var userKeyBindingsURL: URL? {
         guard let passInfo = getpwuid(getuid()) else {
             return nil
@@ -60,6 +63,15 @@ struct KeyBindingInspectorApp: App {
                 }
                 .keyboardShortcut("o", modifiers: [.command, .shift, .option])
                 .disabled(!userKeyBindingsExists)
+            }
+
+            CommandGroup(after: .textEditing) {
+                Button("Find") {
+                    showingAccessoryBar = true
+                    searchFieldFocused?.wrappedValue = true
+                }
+                .disabled(showingAccessoryBar == nil)
+                .keyboardShortcut("f")
             }
         }
     }

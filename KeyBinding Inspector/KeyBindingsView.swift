@@ -39,7 +39,7 @@ struct KeyBindingsView: View {
     @State var keyBindings: [KeyBinding] = []
     @State var query: String = ""
 
-    @State var showingAccessoryBar: Bool = true
+    @State var showingAccessoryBar: Bool = false
     @FocusState var searchFieldFocused: Bool
 
     var filteredKeyBindings: [KeyBinding] {

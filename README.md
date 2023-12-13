@@ -6,6 +6,10 @@ A tool to inspect [key bindings for the macOS text system](https://developer.app
 
 You can [download the latest version](https://github.com/davidbalbert/KeyBinding-Inspector/releases/latest) from the Releases page.
 
+## System requirements
+
+KeyBinding Inspector requires macOS Sonoma or later.
+
 ## Running the code
 
 Copy Developer.xcconfig.example to Developer.xcconfig and set your development team ID and code signing identity.

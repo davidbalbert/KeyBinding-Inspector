@@ -1,5 +1,7 @@
 # KeyBinding Inspector
 
+![A screenshot of KeyBinding Inspector](/Screen Shot.png?raw=true)
+
 A tool to inspect [key bindings for the macOS text system](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/TextDefaultsBindings/TextDefaultsBindings.html).
 
 ## Download

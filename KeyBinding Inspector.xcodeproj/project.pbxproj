@@ -13,6 +13,7 @@
 		63A7B4B22B28E3A800CF3A8B /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B12B28E3A800CF3A8B /* Foundation+Extensions.swift */; };
 		63A7B4B42B28E41200CF3A8B /* FileWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B32B28E41200CF3A8B /* FileWatcher.swift */; };
 		63A7B4B62B2925CA00CF3A8B /* AccessoryBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B52B2925CA00CF3A8B /* AccessoryBar.swift */; };
+		63E26D6F2B2A3DD4001221AE /* Screen Shot.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E26D6E2B2A3DD4001221AE /* Screen Shot.png */; };
 		63F8913E2B2795D100F1572D /* KeyBindingInspectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */; };
 		63F891402B2795D100F1572D /* KeyBindingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8913F2B2795D100F1572D /* KeyBindingsView.swift */; };
 		63F891422B2795D200F1572D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63F891412B2795D200F1572D /* Assets.xcassets */; };
@@ -48,6 +49,7 @@
 		63A7B4B12B28E3A800CF3A8B /* Foundation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
 		63A7B4B32B28E41200CF3A8B /* FileWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWatcher.swift; sourceTree = "<group>"; };
 		63A7B4B52B2925CA00CF3A8B /* AccessoryBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryBar.swift; sourceTree = "<group>"; };
+		63E26D6E2B2A3DD4001221AE /* Screen Shot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot.png"; sourceTree = "<group>"; };
 		63F8913A2B2795D100F1572D /* KeyBinding Inspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KeyBinding Inspector.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindingInspectorApp.swift; sourceTree = "<group>"; };
 		63F8913F2B2795D100F1572D /* KeyBindingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindingsView.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 		63F891312B2795D100F1572D = {
 			isa = PBXGroup;
 			children = (
+				63E26D6E2B2A3DD4001221AE /* Screen Shot.png */,
 				6300FC862B2A3B2500EBF7E7 /* LICENSE.md */,
 				6300FC872B2A3B2500EBF7E7 /* README.md */,
 				6300FC882B2A3B2500EBF7E7 /* TODO.md */,
@@ -264,6 +267,7 @@
 				6300FC8A2B2A3B2500EBF7E7 /* README.md in Resources */,
 				63F891422B2795D200F1572D /* Assets.xcassets in Resources */,
 				6300FC8B2B2A3B2500EBF7E7 /* TODO.md in Resources */,
+				63E26D6F2B2A3DD4001221AE /* Screen Shot.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

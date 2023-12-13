@@ -226,7 +226,7 @@ struct KeyBinding: Identifiable, Equatable {
         }
     }
 
-    var escapedRawKey: String {
+    var rawKey: String {
         // print control characters either as ^C, or <CR>
         // print special keys as unicode sequences: e.g. "\u{f700}"
 
@@ -234,26 +234,57 @@ struct KeyBinding: Identifiable, Equatable {
             return "\"\""
         }
 
-        var s = String(key.dropLast())
+        let scalar = key.unicodeScalars.last!.value
 
-        if let match = s.firstMatch(of: /\\\d+/) {
-            s += match.0
-            return s
+        let s: String
+        if let match = key.dropLast().firstMatch(of: /\\\d+/) {
+            s = String(match.0)
+        } else if scalar >= 0xf700 && scalar <= 0xf8ff {
+            s = "\\u{\(String(format: "%x", scalar))}"
+        } else if let cc = escapedControlCharacters[Int(scalar)] {
+            s = cc
+        } else if key.last == "\"" {
+            s = "\\\""
+        } else {
+            s = String(key.last!)
+        }
+
+        return "\"" + key.dropLast() + s + "\""
+    }
+
+    var attributedRawKey: AttributedString {
+        if key.isEmpty {
+            var attrStr = AttributedString("\"\"")
+            attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
+            return attrStr
         }
 
         let scalar = key.unicodeScalars.last!.value
 
-        if scalar >= 0xf700 && scalar <= 0xf8ff {
-            s += "\\u{\(String(format: "%x", scalar))}"
+        let s: String
+        if let match = key.dropLast().firstMatch(of: /\\\d+/) {
+            s = String(match.0)
+        } else if scalar >= 0xf700 && scalar <= 0xf8ff {
+            s = "\\u{\(String(format: "%x", scalar))}"
         } else if let cc = escapedControlCharacters[Int(scalar)] {
-            s += cc
+            s = cc
         } else if key.last == "\"" {
-            s += "\\\""
+            s = "\\\""
         } else {
-            s += String(key.last!)
+            var attrStr = AttributedString("\"" + key + "\"")
+            attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
+            return attrStr
         }
 
-        return "\"" + s + "\""
+        var special = AttributedString(s)
+        special.backgroundColor = .quaternaryLabelColor
+
+        let prefix = AttributedString("\"" + key.dropLast())
+        let suffix = AttributedString("\"")
+        var attrStr = prefix + special + suffix
+        attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
+
+        return attrStr
     }
 }
 

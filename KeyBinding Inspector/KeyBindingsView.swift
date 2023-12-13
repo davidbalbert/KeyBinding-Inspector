@@ -59,7 +59,7 @@ struct KeyBindingsView: View {
         return (
             binding.keyWithoutModifiers.localizedCaseInsensitiveContains(query) ||
             binding.actions.contains(where: { $0.localizedCaseInsensitiveContains(query) }) ||
-            binding.escapedRawKey.localizedCaseInsensitiveContains(query)
+            binding.rawKey.localizedCaseInsensitiveContains(query)
         )
     }
 
@@ -76,41 +76,25 @@ struct KeyBindingsView: View {
 
         return bindings
     }
-    
-    func rangesOfQuery(in attrStr: AttributedString) -> [Range<AttributedString.Index>] {
-        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        if q.isEmpty {
-            return []
-        }
 
-        var ranges: [Range<AttributedString.Index>] = []
-        var start = attrStr.startIndex
-        while let range = attrStr[start...].range(of: q, options: .caseInsensitive) {
-            ranges.append(range)
-            start = range.upperBound
-        }
-
-        return ranges
+    func highlight(_ s: String) -> AttributedString {
+        highlight(AttributedString(s))
     }
 
-    func highlight(_ attrStr: inout AttributedString) {
-        let ranges = rangesOfQuery(in: attrStr)
+    func highlight(_ attrStr: AttributedString) -> AttributedString {
+        var s = attrStr
+
+        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        let ranges = s.ranges(of: q, options: .caseInsensitive)
         for r in ranges {
-            attrStr[r].backgroundColor = .systemYellow.withSystemEffect(.disabled)
+            s[r].backgroundColor = .systemYellow.withSystemEffect(.disabled)
         }
+
+        return s
     }
 
     func attributedString(for string: String) -> AttributedString {
-        var attrStr = AttributedString(string)
-        highlight(&attrStr)
-        return attrStr
-    }
-
-    func formattedRawKey(for string: String) -> AttributedString {
-        var attrStr = AttributedString(string)
-        attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
-        highlight(&attrStr)
-        return attrStr
+        return highlight(AttributedString(string))
     }
 
     var body: some View {
@@ -123,16 +107,16 @@ struct KeyBindingsView: View {
                     }
                     .frame(width: 50, alignment: .trailing)
 
-                    Text(attributedString(for: b.keyWithoutModifiers))
+                    Text(highlight(b.keyWithoutModifiers))
                 }
             }
 
-            TableColumn("Raw", value: \.escapedRawKey) { b in
-                Text(formattedRawKey(for: b.escapedRawKey))
+            TableColumn("Raw", value: \.rawKey) { b in
+                Text(highlight(b.attributedRawKey))
             }
 
             TableColumn("Action", value: \.formattedActions) { b in
-                Text(attributedString(for: b.formattedActions))
+                Text(highlight(b.formattedActions))
             }
         }
         .accessoryBar($showingAccessoryBar) {

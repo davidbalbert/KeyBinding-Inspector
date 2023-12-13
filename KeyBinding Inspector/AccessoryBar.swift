@@ -10,15 +10,16 @@ import SwiftUI
 struct AccessoryBarSearchTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         ZStack {
+            RoundedRectangle(cornerRadius: 5.0)
+                .stroke(.quaternary)
+                .fill(Color(NSColor.controlBackgroundColor))
+                .frame(height: 22)
             HStack(spacing: 3.0) {
                 Image(systemName: "magnifyingglass")
                 configuration
                     .textFieldStyle(.plain)
             }
             .padding([.leading, .trailing], 5.0)
-            RoundedRectangle(cornerRadius: 5.0)
-                .stroke(.quaternary)
-                .frame(height: 22)
         }
     }
 }
@@ -30,6 +31,16 @@ extension TextFieldStyle where Self == AccessoryBarSearchTextFieldStyle {
 struct AccessoryBar<Content>: View where Content: View {
     @Binding var visible: Bool
     @ViewBuilder let content: () -> Content
+
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+
+    var backgroundColor: Color {
+        if colorScheme == .dark {
+            Color(NSColor.controlBackgroundColor.withSystemEffect(.disabled))
+        } else {
+            Color(NSColor.controlBackgroundColor)
+        }
+    }
 
     var body: some View {
         if visible {
@@ -51,7 +62,7 @@ struct AccessoryBar<Content>: View where Content: View {
                 Divider()
             }
             .buttonStyle(.accessoryBarAction)
-            .background(.white)
+            .background(backgroundColor)
             .transition(.move(edge: .top))
         }
     }
@@ -63,6 +74,14 @@ extension View {
             AccessoryBar(visible: visible, content: content)
             self
         }
+    }
+}
+
+
+#Preview {
+    AccessoryBar(visible: .constant(true)) {
+        TextField("Search", text: .constant(""))
+            .textFieldStyle(.accessoryBarSearchField)
     }
 }
 

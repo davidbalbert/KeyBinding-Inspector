@@ -79,7 +79,7 @@ struct KeyBindingsView: View {
 
         let ranges = rangesOfQuery(in: attributedString)
         for r in ranges {
-            attributedString[r].backgroundColor = .yellow
+            attributedString[r].backgroundColor = .systemYellow.withSystemEffect(.disabled)
         }
 
         return attributedString

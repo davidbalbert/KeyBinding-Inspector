@@ -57,6 +57,33 @@ struct KeyBindingsView: View {
 
         return bindings
     }
+    
+    func rangesOfQuery(in attrString: AttributedString) -> [Range<AttributedString.Index>] {
+        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        if q.isEmpty {
+            return []
+        }
+
+        var ranges: [Range<AttributedString.Index>] = []
+        var start = attrString.startIndex
+        while let range = attrString[start...].range(of: q, options: .caseInsensitive) {
+            ranges.append(range)
+            start = range.upperBound
+        }
+
+        return ranges
+    }
+
+    func attributedString(for string: String) -> AttributedString {
+        var attributedString = AttributedString(string)
+
+        let ranges = rangesOfQuery(in: attributedString)
+        for r in ranges {
+            attributedString[r].backgroundColor = .yellow
+        }
+
+        return attributedString
+    }
 
     var body: some View {
         Table(filteredKeyBindings, sortOrder: $sortOrder) {
@@ -68,10 +95,12 @@ struct KeyBindingsView: View {
                     }
                     .frame(width: 50, alignment: .trailing)
 
-                    Text(b.keyWithoutModifiers)
+                    Text(attributedString(for: b.keyWithoutModifiers))
                 }
             }
-            TableColumn("Action", value: \.formattedActions)
+            TableColumn("Action", value: \.formattedActions) { b in
+                Text(attributedString(for: b.formattedActions))
+            }
         }
         .accessoryBar($showingAccessoryBar) {
             TextField("Search", text: $query)

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6300FC892B2A3B2500EBF7E7 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 6300FC862B2A3B2500EBF7E7 /* LICENSE.md */; };
+		6300FC8A2B2A3B2500EBF7E7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6300FC872B2A3B2500EBF7E7 /* README.md */; };
+		6300FC8B2B2A3B2500EBF7E7 /* TODO.md in Resources */ = {isa = PBXBuildFile; fileRef = 6300FC882B2A3B2500EBF7E7 /* TODO.md */; };
+		6300FC8D2B2A3B4400EBF7E7 /* Developer.xcconfig.example in Resources */ = {isa = PBXBuildFile; fileRef = 6300FC8C2B2A3B4400EBF7E7 /* Developer.xcconfig.example */; };
+		6300FC8F2B2A3B5000EBF7E7 /* KeyBinding Inspector.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6300FC8E2B2A3B5000EBF7E7 /* KeyBinding Inspector.xcconfig */; };
+		6300FC912B2A3B7600EBF7E7 /* Developer.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6300FC902B2A3B7600EBF7E7 /* Developer.xcconfig */; };
 		63A7B4B22B28E3A800CF3A8B /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B12B28E3A800CF3A8B /* Foundation+Extensions.swift */; };
 		63A7B4B42B28E41200CF3A8B /* FileWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B32B28E41200CF3A8B /* FileWatcher.swift */; };
 		63A7B4B62B2925CA00CF3A8B /* AccessoryBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B52B2925CA00CF3A8B /* AccessoryBar.swift */; };
@@ -39,6 +45,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6300FC862B2A3B2500EBF7E7 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		6300FC872B2A3B2500EBF7E7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		6300FC882B2A3B2500EBF7E7 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		6300FC8C2B2A3B4400EBF7E7 /* Developer.xcconfig.example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Developer.xcconfig.example; sourceTree = "<group>"; };
+		6300FC8E2B2A3B5000EBF7E7 /* KeyBinding Inspector.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "KeyBinding Inspector.xcconfig"; sourceTree = "<group>"; };
+		6300FC902B2A3B7600EBF7E7 /* Developer.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Developer.xcconfig; sourceTree = "<group>"; };
 		63A7B4B12B28E3A800CF3A8B /* Foundation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
 		63A7B4B32B28E41200CF3A8B /* FileWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWatcher.swift; sourceTree = "<group>"; };
 		63A7B4B52B2925CA00CF3A8B /* AccessoryBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryBar.swift; sourceTree = "<group>"; };
@@ -86,6 +98,12 @@
 		63F891312B2795D100F1572D = {
 			isa = PBXGroup;
 			children = (
+				6300FC8C2B2A3B4400EBF7E7 /* Developer.xcconfig.example */,
+				6300FC862B2A3B2500EBF7E7 /* LICENSE.md */,
+				6300FC872B2A3B2500EBF7E7 /* README.md */,
+				6300FC882B2A3B2500EBF7E7 /* TODO.md */,
+				6300FC902B2A3B7600EBF7E7 /* Developer.xcconfig */,
+				6300FC8E2B2A3B5000EBF7E7 /* KeyBinding Inspector.xcconfig */,
 				63F8913C2B2795D100F1572D /* KeyBinding Inspector */,
 				63F8914E2B2795D200F1572D /* KeyBinding InspectorTests */,
 				63F891582B2795D200F1572D /* KeyBinding InspectorUITests */,
@@ -251,7 +269,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				63F891452B2795D200F1572D /* Preview Assets.xcassets in Resources */,
+				6300FC892B2A3B2500EBF7E7 /* LICENSE.md in Resources */,
+				6300FC8A2B2A3B2500EBF7E7 /* README.md in Resources */,
 				63F891422B2795D200F1572D /* Assets.xcassets in Resources */,
+				6300FC8B2B2A3B2500EBF7E7 /* TODO.md in Resources */,
+				6300FC8F2B2A3B5000EBF7E7 /* KeyBinding Inspector.xcconfig in Resources */,
+				6300FC8D2B2A3B4400EBF7E7 /* Developer.xcconfig.example in Resources */,
+				6300FC912B2A3B7600EBF7E7 /* Developer.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +345,7 @@
 /* Begin XCBuildConfiguration section */
 		63F8915D2B2795D200F1572D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6300FC8E2B2A3B5000EBF7E7 /* KeyBinding Inspector.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -384,6 +409,7 @@
 		};
 		63F8915E2B2795D200F1572D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6300FC8E2B2A3B5000EBF7E7 /* KeyBinding Inspector.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

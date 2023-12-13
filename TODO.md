@@ -1,0 +1,5 @@
+- Editing key bindings. This requires custom Property List parsing and serialization so that we don't randomly reorder the key binding dictionary on every save.
+- Nested dictionaries to support multi-keystroke bindings.
+- Polish document handling. This probably requires dropping SwiftUI's app lifecycle and moving back to AppKit's so we can use NSDocument. Specifically:
+    - Hide save-related menu items until editing is supported. SwiftUI is supposed to support this with `CommandGroup(replacing: .saveItem)`, but as of Sonoma doing that also nukes "Open Recent" and adds a disabled menu item with the name NSMenuItem.
+    - Continue to allow for auto-reloading of changes made by other apps without dirtying document state. SwiftUI can't distinguish between changes made the by the user (which marks the document as unsaved) and changes made by FileWatcher when we reload the file. It's possible this could also be solved by switching to ReferenceFileDocument, but I'm not sure.

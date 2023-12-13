@@ -47,6 +47,9 @@ struct KeyBindingInspectorApp: App {
         DocumentGroup(viewing: KeyBindingsDocument.self) { configuration in
             KeyBindingsView(document: configuration.document, url: configuration.fileURL)
         }
+        Window("Software Update", id: "software-update") {
+            CheckForUpdatesView()
+        }
         .commands {
             CommandGroup(after: .newItem) {
                 Button("Open System Key Bindings") {

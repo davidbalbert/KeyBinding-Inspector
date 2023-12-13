@@ -10,6 +10,7 @@
 		63A7B4B22B28E3A800CF3A8B /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B12B28E3A800CF3A8B /* Foundation+Extensions.swift */; };
 		63A7B4B42B28E41200CF3A8B /* FileWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B32B28E41200CF3A8B /* FileWatcher.swift */; };
 		63A7B4B62B2925CA00CF3A8B /* AccessoryBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B52B2925CA00CF3A8B /* AccessoryBar.swift */; };
+		63C25F182B2A709F007AFF64 /* CheckForUpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C25F172B2A709F007AFF64 /* CheckForUpdatesView.swift */; };
 		63F8913E2B2795D100F1572D /* KeyBindingInspectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */; };
 		63F891402B2795D100F1572D /* KeyBindingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8913F2B2795D100F1572D /* KeyBindingsView.swift */; };
 		63F891422B2795D200F1572D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63F891412B2795D200F1572D /* Assets.xcassets */; };
@@ -45,6 +46,7 @@
 		63A7B4B12B28E3A800CF3A8B /* Foundation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
 		63A7B4B32B28E41200CF3A8B /* FileWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWatcher.swift; sourceTree = "<group>"; };
 		63A7B4B52B2925CA00CF3A8B /* AccessoryBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryBar.swift; sourceTree = "<group>"; };
+		63C25F172B2A709F007AFF64 /* CheckForUpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckForUpdatesView.swift; sourceTree = "<group>"; };
 		63E26D6E2B2A3DD4001221AE /* screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot.png; sourceTree = "<group>"; };
 		63F8913A2B2795D100F1572D /* KeyBinding Inspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KeyBinding Inspector.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindingInspectorApp.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				63F891462B2795D200F1572D /* KeyBinding_Inspector.entitlements */,
 				63F891682B27BCA300F1572D /* KeyBinding-Inspector-Info.plist */,
 				63A7B4B52B2925CA00CF3A8B /* AccessoryBar.swift */,
+				63C25F172B2A709F007AFF64 /* CheckForUpdatesView.swift */,
 				63A7B4B32B28E41200CF3A8B /* FileWatcher.swift */,
 				63A7B4B12B28E3A800CF3A8B /* Foundation+Extensions.swift */,
 				63F8916B2B27D65500F1572D /* KeyBinding.swift */,
@@ -290,6 +293,7 @@
 				63A7B4B42B28E41200CF3A8B /* FileWatcher.swift in Sources */,
 				63F8913E2B2795D100F1572D /* KeyBindingInspectorApp.swift in Sources */,
 				63A7B4B22B28E3A800CF3A8B /* Foundation+Extensions.swift in Sources */,
+				63C25F182B2A709F007AFF64 /* CheckForUpdatesView.swift in Sources */,
 				63F8916C2B27D65500F1572D /* KeyBinding.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

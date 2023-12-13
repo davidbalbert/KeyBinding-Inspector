@@ -136,7 +136,7 @@ struct KeyBinding: Identifiable, Equatable {
     var id: String { key }
 
     var formattedActions: String {
-        actions.joined(separator: " ")
+        actions.joined(separator: ", ")
     }
 
     var modifiers: String {

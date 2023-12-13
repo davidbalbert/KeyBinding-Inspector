@@ -10,10 +10,6 @@ You can [download the latest version](https://github.com/davidbalbert/KeyBinding
 
 KeyBinding Inspector requires macOS Sonoma or later.
 
-## Running the code
-
-Copy Developer.xcconfig.example to Developer.xcconfig and set your development team ID and code signing identity.
-
 ## Contributing
 
 Feel free to open an issue or pull request. If you're thinking about a large change, it's a good idea to open an issue first to discuss it.

@@ -7,41 +7,6 @@
 
 import SwiftUI
 
-struct AccessoryBarSearchTextFieldStyle: TextFieldStyle {
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        ZStack {
-            HStack(spacing: 3.0) {
-                Image(systemName: "magnifyingglass")
-                configuration
-                    .textFieldStyle(.plain)
-            }
-            .padding([.leading, .trailing], 5.0)
-            RoundedRectangle(cornerRadius: 5.0)
-                .stroke(.quaternary)
-                .frame(height: 22)
-        }
-    }
-}
-
-extension TextFieldStyle where Self == AccessoryBarSearchTextFieldStyle {
-    static var accessoryBarSearchField: AccessoryBarSearchTextFieldStyle { AccessoryBarSearchTextFieldStyle() }
-}
-
-struct AccessoryBar<Content>: View where Content: View {
-    @ViewBuilder let content: () -> Content
-
-    var body: some View {
-        VStack(spacing: 0) {
-            content()
-                // Visual height is 28, but height == 27 + 1 point of top padding
-                // balances the extra point added by the Divider
-                .frame(height: 27)
-                .padding(EdgeInsets(top: 1, leading: 5, bottom: 0, trailing: 5))
-            Divider()
-        }
-        .background(.white)
-    }
-}
 
 struct SearchFieldFocusedKey: FocusedValueKey {
     typealias Value = FocusState<Bool>.Binding
@@ -74,7 +39,7 @@ struct KeyBindingsView: View {
     @State var keyBindings: [KeyBinding] = []
     @State var query: String = ""
 
-    @State var showingAccessoryBar: Bool = false
+    @State var showingAccessoryBar: Bool = true
     @FocusState var searchFieldFocused: Bool
 
     var filteredKeyBindings: [KeyBinding] {
@@ -94,44 +59,28 @@ struct KeyBindingsView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                if showingAccessoryBar {
-                    AccessoryBar {
-                        HStack {
-                            TextField("Search", text: $query)
-                                .textFieldStyle(.accessoryBarSearchField)
-                                .keyboardShortcut("f")
-                                .focused($searchFieldFocused, equals: true)
-                                .onKeyPress(.escape) {
-                                    showingAccessoryBar = false
-                                    return .handled
-                                }
-                            Button("Done") {
-                                showingAccessoryBar = false
-                            }
-                            .font(.callout)
-                            .buttonStyle(.accessoryBarAction)
-                        }
-                    }
-                    .transition(.move(edge: .top))
-                }
-            }
-
-            Table(filteredKeyBindings, sortOrder: $sortOrder) {
-                TableColumn("Key", value: \.keyWithoutModifiers) { b in
+        Table(filteredKeyBindings, sortOrder: $sortOrder) {
+            TableColumn("Key", value: \.keyWithoutModifiers) { b in
+                HStack {
                     HStack {
-                        HStack {
-                            Spacer()
-                            Text(b.modifiers)
-                        }
-                        .frame(width: 50, alignment: .trailing)
-
-                        Text(b.keyWithoutModifiers)
+                        Spacer()
+                        Text(b.modifiers)
                     }
+                    .frame(width: 50, alignment: .trailing)
+
+                    Text(b.keyWithoutModifiers)
                 }
-                TableColumn("Action", value: \.formattedActions)
             }
+            TableColumn("Action", value: \.formattedActions)
+        }
+        .accessoryBar($showingAccessoryBar) {
+            TextField("Search", text: $query)
+                .textFieldStyle(.accessoryBarSearchField)
+                .focused($searchFieldFocused)
+                .onKeyPress(.escape) {
+                    showingAccessoryBar = false
+                    return .handled
+                }
         }
         .focusedSceneValue(\.showingAccessoryBar, $showingAccessoryBar)
         .focusedSceneValue(\.searchFieldFocused, $searchFieldFocused)

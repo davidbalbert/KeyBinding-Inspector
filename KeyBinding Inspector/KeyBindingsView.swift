@@ -37,19 +37,38 @@ struct KeyBindingsView: View {
 
     @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
     @State var keyBindings: [KeyBinding] = []
-    @State var query: String = ""
 
-    @State var showingAccessoryBar: Bool = false
+    @State var queryText: String = ""
+    var query: String {
+        if transitioning && !showingAccessoryBar {
+            ""
+        } else {
+            queryText
+        }
+    }
+
     @FocusState var searchFieldFocused: Bool
+    @State var showingAccessoryBar: Bool = false
+    @State var transitioning: Bool = false
+
+    func matchesQuery(_ binding: KeyBinding, _ query: String) -> Bool {
+        if query.isEmpty {
+            return true
+        }
+
+        return (
+            binding.keyWithoutModifiers.localizedCaseInsensitiveContains(query) ||
+            binding.actions.contains(where: { $0.localizedCaseInsensitiveContains(query) }) ||
+            binding.escapedRawKey.localizedCaseInsensitiveContains(query)
+        )
+    }
 
     var filteredKeyBindings: [KeyBinding] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
 
         var bindings = keyBindings
-        if !q.isEmpty {
-            bindings.removeAll {
-                !$0.keyWithoutModifiers.localizedCaseInsensitiveContains(q) && !$0.actions.contains(where: { $0.localizedCaseInsensitiveContains(q)})
-            }
+        bindings.removeAll {
+            !matchesQuery($0, q)
         }
 
         bindings.sort { $0.modifiers.count < $1.modifiers.count }
@@ -58,15 +77,15 @@ struct KeyBindingsView: View {
         return bindings
     }
     
-    func rangesOfQuery(in attrString: AttributedString) -> [Range<AttributedString.Index>] {
+    func rangesOfQuery(in attrStr: AttributedString) -> [Range<AttributedString.Index>] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
         if q.isEmpty {
             return []
         }
 
         var ranges: [Range<AttributedString.Index>] = []
-        var start = attrString.startIndex
-        while let range = attrString[start...].range(of: q, options: .caseInsensitive) {
+        var start = attrStr.startIndex
+        while let range = attrStr[start...].range(of: q, options: .caseInsensitive) {
             ranges.append(range)
             start = range.upperBound
         }
@@ -74,15 +93,24 @@ struct KeyBindingsView: View {
         return ranges
     }
 
-    func attributedString(for string: String) -> AttributedString {
-        var attributedString = AttributedString(string)
-
-        let ranges = rangesOfQuery(in: attributedString)
+    func highlight(_ attrStr: inout AttributedString) {
+        let ranges = rangesOfQuery(in: attrStr)
         for r in ranges {
-            attributedString[r].backgroundColor = .systemYellow.withSystemEffect(.disabled)
+            attrStr[r].backgroundColor = .systemYellow.withSystemEffect(.disabled)
         }
+    }
 
-        return attributedString
+    func attributedString(for string: String) -> AttributedString {
+        var attrStr = AttributedString(string)
+        highlight(&attrStr)
+        return attrStr
+    }
+
+    func formattedRawKey(for string: String) -> AttributedString {
+        var attrStr = AttributedString(string)
+        attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
+        highlight(&attrStr)
+        return attrStr
     }
 
     var body: some View {
@@ -98,12 +126,17 @@ struct KeyBindingsView: View {
                     Text(attributedString(for: b.keyWithoutModifiers))
                 }
             }
+
+            TableColumn("Raw", value: \.escapedRawKey) { b in
+                Text(formattedRawKey(for: b.escapedRawKey))
+            }
+
             TableColumn("Action", value: \.formattedActions) { b in
                 Text(attributedString(for: b.formattedActions))
             }
         }
         .accessoryBar($showingAccessoryBar) {
-            TextField("Search", text: $query)
+            TextField("Search", text: $queryText)
                 .textFieldStyle(.accessoryBarSearchField)
                 .focused($searchFieldFocused)
                 .onKeyPress(.escape) {
@@ -113,6 +146,21 @@ struct KeyBindingsView: View {
         }
         .focusedSceneValue(\.showingAccessoryBar, $showingAccessoryBar)
         .focusedSceneValue(\.searchFieldFocused, $searchFieldFocused)
+        .onChange(of: showingAccessoryBar) {
+            transitioning = true
+        }
+        .onChange(of: transitioning) {
+            if !transitioning && !showingAccessoryBar {
+                queryText = ""
+            }
+        }
+        .transaction { t in
+            if t.animation != nil {
+                t.addAnimationCompletion {
+                    transitioning = false
+                }
+            }
+        }
         .animation(.easeInOut(duration: 0.1), value: showingAccessoryBar)
         .onChange(of: document) {
             keyBindings = document.keyBindings

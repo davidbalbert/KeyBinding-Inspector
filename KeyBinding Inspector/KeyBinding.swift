@@ -101,12 +101,12 @@ let controlCharacters: [Int: String] = [
     0x05: "Enq",
     0x06: "Ack",
     0x07: "Bel",
-    0x08: "Bs",
-    0x09: "Ht",
-    0x0a: "Nl",
+    0x08: "Backspace",
+    0x09: "Tab",
+    0x0a: "Newline",
     0x0b: "Vt",
-    0x0c: "Np",
-    0x0d: "Cr",
+    0x0c: "Ff",
+    0x0d: "Carriage Return",
     0x0e: "So",
     0x0f: "Si",
     0x10: "Dle",
@@ -126,7 +126,44 @@ let controlCharacters: [Int: String] = [
     0x1e: "Rs",
     0x1f: "Us",
     0x20: "Space",
-    0x7f: "Del",
+    0x7f: "Delete",
+]
+
+let escapedControlCharacters: [Int: String] = [
+    0x00: "<NUL>",
+    0x01: "<SOH>",
+    0x02: "<STX>",
+    0x03: "^C",
+    0x04: "<EOT>",
+    0x05: "<ENQ>",
+    0x06: "<ACK>",
+    0x07: "<BEL>",
+    0x08: "\\b",
+    0x09: "\\t",
+    0x0a: "\\n",
+    0x0b: "\\v",
+    0x0c: "\\f",
+    0x0d: "\\r",
+    0x0e: "<SO>",
+    0x0f: "<SI>",
+    0x10: "<DLE>",
+    0x11: "<DC1>",
+    0x12: "<DC2>",
+    0x13: "<DC3>",
+    0x14: "<DC4>",
+    0x15: "<NAK>",
+    0x16: "<SYN>",
+    0x17: "<ETB>",
+    0x18: "<CAN>",
+    0x19: "<EM>",
+    0x1a: "<SUB>",
+    0x1b: "<ESC>",
+    0x1c: "<FS>",
+    0x1d: "<GS>",
+    0x1e: "<RS>",
+    0x1f: "<US>",
+    0x20: " ",
+    0x7f: "<DEL>",
 ]
 
 struct KeyBinding: Identifiable, Equatable {
@@ -140,7 +177,7 @@ struct KeyBinding: Identifiable, Equatable {
     }
 
     var modifiers: String {
-        if key.isEmpty {
+        if key.isEmpty || key.count == 1 {
             return ""
         }
 
@@ -187,6 +224,36 @@ struct KeyBinding: Identifiable, Equatable {
         } else {
             return controlCharacters[Int(key.unicodeScalars.last!.value)] ?? key.last!.uppercased()
         }
+    }
+
+    var escapedRawKey: String {
+        // print control characters either as ^C, or <CR>
+        // print special keys as unicode sequences: e.g. "\u{f700}"
+
+        if key.isEmpty {
+            return "\"\""
+        }
+
+        var s = String(key.dropLast())
+
+        if let match = s.firstMatch(of: /\\\d+/) {
+            s += match.0
+            return s
+        }
+
+        let scalar = key.unicodeScalars.last!.value
+
+        if scalar >= 0xf700 && scalar <= 0xf8ff {
+            s += "\\u{\(String(format: "%x", scalar))}"
+        } else if let cc = escapedControlCharacters[Int(scalar)] {
+            s += cc
+        } else if key.last == "\"" {
+            s += "\\\""
+        } else {
+            s += String(key.last!)
+        }
+
+        return "\"" + s + "\""
     }
 }
 

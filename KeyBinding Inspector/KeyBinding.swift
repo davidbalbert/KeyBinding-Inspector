@@ -176,8 +176,13 @@ struct KeyBinding: Identifiable, Equatable {
         actions.joined(separator: ", ")
     }
 
+    var modifierCount: Int {
+        // count instances of ^~$@ in key
+        key.filter { "^~$@".contains($0) }.count
+    }
+
     var modifiers: String {
-        if key.isEmpty || key.count == 1 {
+        if key.isEmpty {
             return ""
         }
 
@@ -194,6 +199,20 @@ struct KeyBinding: Identifiable, Equatable {
         }
         if key.contains("@") {
             s += "⌘"
+        }
+
+        // "Text System Defaults and Key Bindings" says "One or more key modifiers, which
+        // must precede one of the other key-identifier elements."
+        //
+        // But StandardKeyBinding.dict includes "^" and "@" bound to noop:, both which are
+        // modifiers and don't precede anything.
+        //
+        // I'm not sure what this means, but I'm treating them as if they have no modifiers
+        // and I highlight them in red to show that I'm confused.
+        //
+        // Ref: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/TextDefaultsBindings/TextDefaultsBindings.html
+        if s.count == key.count {
+            return ""
         }
 
         return s
@@ -227,9 +246,6 @@ struct KeyBinding: Identifiable, Equatable {
     }
 
     var rawKey: String {
-        // print control characters either as ^C, or <CR>
-        // print special keys as unicode sequences: e.g. "\u{f700}"
-
         if key.isEmpty {
             return "\"\""
         }
@@ -271,13 +287,21 @@ struct KeyBinding: Identifiable, Equatable {
         } else if key.last == "\"" {
             s = "\\\""
         } else {
-            var attrStr = AttributedString("\"" + key + "\"")
+            var k = AttributedString(key)
+            if modifierCount == key.count {
+                k.backgroundColor = .systemRed.withSystemEffect(.disabled)
+            }
+
+            var q = AttributedString("\"")
+            var attrStr = q + k + q
             attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
             return attrStr
         }
 
         var special = AttributedString(s)
-        special.backgroundColor = .quaternaryLabelColor
+        if s != " " {
+            special.backgroundColor = .quaternaryLabelColor
+        }
 
         let prefix = AttributedString("\"" + key.dropLast())
         let suffix = AttributedString("\"")

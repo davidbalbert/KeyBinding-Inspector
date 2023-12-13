@@ -4,3 +4,4 @@
 - Polish document handling. This probably requires dropping SwiftUI's app lifecycle and moving back to AppKit's so we can use NSDocument. Specifically:
     - Hide save-related menu items until editing is supported. SwiftUI is supposed to support this with `CommandGroup(replacing: .saveItem)`, but as of Sonoma doing that also nukes "Open Recent" and adds a disabled menu item with the name NSMenuItem.
     - Continue to allow for auto-reloading of changes made by other apps without dirtying document state. SwiftUI can't distinguish between changes made the by the user (which marks the document as unsaved) and changes made by FileWatcher when we reload the file. It's possible this could also be solved by switching to ReferenceFileDocument, but I'm not sure.
+- Probably debug Sandbox issues. We're restricted to user-selected files, so I'm not sure why the "Open System Key Bindings" and "Open User Key Bindings" menu items work on my computer.

@@ -6,8 +6,21 @@
 //
 
 import SwiftUI
+import CoreServices
 
 struct CheckForUpdatesView: View {
+    var currentVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+    }
+
+    var defaultWebBrowser: String {
+        let name = LSCopyDefaultApplicationURLForURL(URL(string: "https://github.com")! as CFURL, .viewer, nil)
+            .map { $0.takeRetainedValue() as URL }
+            .map { $0.lastPathComponent.replacingOccurrences(of: ".app", with: "") } ?? "Web Browser"
+
+        return name
+    }
+
     @State var latestVersion: String?
 
     var body: some View {
@@ -24,7 +37,7 @@ struct CheckForUpdatesView: View {
                         Text("A new version of KeyBinding Inspector is available!")
                             .bold()
                             .padding([.top, .bottom], 4)
-                        Text("KeyBinding Inspector \(latestVersion) is now available—you have 0.9. Would you like to download it now?")
+                        Text("KeyBinding Inspector \(latestVersion) is now available—you have \(currentVersion). Would you like to download it now?")
                             .font(.system(size: 11))
                     }
                     .offset(y: -9)
@@ -38,9 +51,9 @@ struct CheckForUpdatesView: View {
                                 .padding([.leading, .trailing], 13)
                         }
                         Button {
-                            print("Open Safari")
+                            print("Open \(defaultWebBrowser)")
                         } label: {
-                            Text("Open Safari")
+                            Text("Open \(defaultWebBrowser)")
                                 .padding([.leading, .trailing], 16)
                         }
                     }

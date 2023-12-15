@@ -118,7 +118,7 @@ struct UpdateChecker: View {
             }
         }
         .padding(20)
-        .frame(width: latestVersion == nil ? 400 : 500)
+        .frame(width: 500)
         .alert("You’re up-to-date!", isPresented: $isLatest) {
             Button("OK") {
                 // Wrap in a task so dismiss() gets called after the

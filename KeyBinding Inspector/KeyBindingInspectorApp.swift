@@ -51,6 +51,7 @@ struct KeyBindingInspectorApp: App {
         Window("Software Update", id: "software-update") {
             UpdateChecker()
         }
+        .windowResizability(.contentSize)
         .commands {
             CommandGroup(after: .appSettings) {
                 Button("Check For Updates") {

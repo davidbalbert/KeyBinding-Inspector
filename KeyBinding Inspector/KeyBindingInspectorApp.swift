@@ -24,6 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 struct KeyBindingInspectorApp: App {
     @NSApplicationDelegateAdaptor var appDelegate: AppDelegate
     @Environment(\.openDocument) var openDocument
+    @Environment(\.openWindow) var openWindow
 
     @FocusedValue(\.searchFieldFocused) var searchFieldFocused: FocusState<Bool>.Binding?
     @FocusedBinding(\.showingAccessoryBar) var showingAccessoryBar: Bool?
@@ -48,9 +49,15 @@ struct KeyBindingInspectorApp: App {
             KeyBindingsView(document: configuration.document, url: configuration.fileURL)
         }
         Window("Software Update", id: "software-update") {
-            CheckForUpdatesView()
+            UpdateChecker()
         }
         .commands {
+            CommandGroup(after: .appSettings) {
+                Button("Check For Updates") {
+                    openWindow(id: "software-update")
+                }
+            }
+
             CommandGroup(after: .newItem) {
                 Button("Open System Key Bindings") {
                     Task {

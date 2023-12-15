@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import CoreServices
+import AppKit
 
 struct CheckForUpdatesView: View {
     var currentVersion: String {
@@ -14,8 +14,7 @@ struct CheckForUpdatesView: View {
     }
 
     var defaultWebBrowser: String {
-        let name = LSCopyDefaultApplicationURLForURL(URL(string: "https://github.com")! as CFURL, .viewer, nil)
-            .map { $0.takeRetainedValue() as URL }
+        let name = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https://github.com")!)
             .map { $0.lastPathComponent.replacingOccurrences(of: ".app", with: "") } ?? "Web Browser"
 
         return name

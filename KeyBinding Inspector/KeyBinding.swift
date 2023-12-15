@@ -292,7 +292,7 @@ struct KeyBinding: Identifiable, Equatable {
                 k.backgroundColor = .systemRed.withSystemEffect(.disabled)
             }
 
-            var q = AttributedString("\"")
+            let q = AttributedString("\"")
             var attrStr = q + k + q
             attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
             return attrStr

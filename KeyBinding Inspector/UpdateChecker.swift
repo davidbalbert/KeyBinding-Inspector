@@ -33,6 +33,33 @@ struct UpdateChecker: View {
         return name
     }
 
+    func fetchVersionInfo() async {
+        let url = URL(string: "https://api.github.com/repos/davidbalbert/KeyBinding-Inspector/releases/latest")!
+        var request = URLRequest(url: url)
+        request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
+        request.setValue("2022-11-28", forHTTPHeaderField: "X-GitHub-Api-Version")
+
+        guard let (data, _) = try? await URLSession.shared.data(for: request),
+              let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+              let tagName = json["tag_name"] as? String else {
+            errorChecking = true
+            return
+        }
+
+        let version: String
+        if tagName.hasPrefix("v") {
+            version = String(tagName.dropFirst())
+        } else {
+            version = tagName
+        }
+
+        if version == currentVersion {
+            isLatest = true
+        } else {
+            latestVersion = version
+        }
+    }
+
     var body: some View {
         HStack(alignment: .top) {
             Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
@@ -41,7 +68,7 @@ struct UpdateChecker: View {
                 .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 19))
                 .offset(y: -3)
 
-            VStack(alignment: .leading) {
+            VStack(alignment: .trailing) {
                 if let latestVersion {
                     VStack(alignment: .leading) {
                         Text("A new version of KeyBinding Inspector is available!")
@@ -51,9 +78,8 @@ struct UpdateChecker: View {
                             .font(.system(size: 11))
                     }
                     .offset(y: -9)
-
+                    
                     HStack {
-                        Spacer()
                         Button {
                             dismiss()
                         } label: {
@@ -81,7 +107,6 @@ struct UpdateChecker: View {
                     .offset(y: -4)
 
                     HStack {
-                        Spacer()
                         Button {
                             dismiss()
                         } label: {
@@ -127,30 +152,11 @@ struct UpdateChecker: View {
             dismiss()
         }
         .task {
-            let url = URL(string: "https://api.github.com/repos/davidbalbert/KeyBinding-Inspector/releases/latest")!
-            var request = URLRequest(url: url)
-            request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-            request.setValue("2022-11-28", forHTTPHeaderField: "X-GitHub-Api-Version")
-
-            guard let (data, _) = try? await URLSession.shared.data(for: request),
-                  let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                  let tagName = json["tag_name"] as? String else {
-                errorChecking = true
+            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
                 return
             }
 
-            let version: String
-            if tagName.hasPrefix("v") {
-                version = String(tagName.dropFirst())
-            } else {
-                version = tagName
-            }
-
-            if version == currentVersion {
-                isLatest = true
-            } else {
-                latestVersion = version
-            }
+            await fetchVersionInfo()
         }
     }
 }
@@ -162,3 +168,4 @@ struct UpdateChecker: View {
 #Preview {
     UpdateChecker(latestVersion: "1.0")
 }
+

@@ -61,31 +61,30 @@ struct UpdateChecker: View {
     }
 
     var body: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .top, spacing: 0) {
             Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
                 .resizable()
                 .frame(width: 64, height: 64)
                 .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 19))
-                .offset(y: -3)
+            
+            if let latestVersion {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("A new version of KeyBinding Inspector is available!")
+                        .bold()
+                    Text("KeyBinding Inspector \(latestVersion) is now available—you have \(currentVersion). Would you like to download it now?")
+                        .font(.system(size: 11))
+                        .fixedSize(horizontal: false, vertical: true)
 
-            VStack(alignment: .trailing) {
-                if let latestVersion {
-                    VStack(alignment: .leading) {
-                        Text("A new version of KeyBinding Inspector is available!")
-                            .bold()
-                            .padding([.top, .bottom], 4)
-                        Text("KeyBinding Inspector \(latestVersion) is now available—you have \(currentVersion). Would you like to download it now?")
-                            .font(.system(size: 11))
-                    }
-                    .offset(y: -9)
-                    
                     HStack {
+                        Spacer()
+
                         Button {
                             dismiss()
                         } label: {
                             Text("Remind Me Later")
-                                .padding([.leading, .trailing], 13)
+                                .padding([.leading, .trailing], 5)
                         }
+
                         Button {
                             if !NSWorkspace.shared.open(updateURL) {
                                 errorOpening = true
@@ -94,19 +93,21 @@ struct UpdateChecker: View {
                             }
                         } label: {
                             Text("Open \(defaultWebBrowser)")
-                                .padding([.leading, .trailing], 16)
+                                .padding([.leading, .trailing], 10)
                         }
                     }
-                } else {
-                    VStack(alignment: .leading) {
-                        Text("Checking for updates…")
-                            .bold()
-                        ProgressView()
-                            .progressViewStyle(.linear)
-                    }
-                    .offset(y: -4)
+                    .padding(.top, 10)
+                }
+            } else {
+                VStack(alignment: .leading) {
+                    Text("Checking for updates…")
+                        .bold()
+                    ProgressView()
+                        .progressViewStyle(.linear)
 
                     HStack {
+                        Spacer()
+
                         Button {
                             dismiss()
                         } label: {

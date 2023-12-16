@@ -51,7 +51,7 @@ struct WatchFile: ViewModifier {
 
 extension View {
     @ViewBuilder
-    func onChangeOfFile(at url: URL?, perform action: @escaping (URL) -> Void) -> some View {
+    func onChange(ofFileAt url: URL?, perform action: @escaping (URL) -> Void) -> some View {
         if let url {
             modifier(WatchFile(url: url, perform: action))
         } else {

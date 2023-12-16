@@ -33,7 +33,7 @@ extension FocusedValues {
 
 struct KeyBindingsView: View {
     let document: KeyBindingsDocument
-    let url: URL?
+    @Environment(\.documentConfiguration) var documentConfiguration: DocumentConfiguration?
 
     @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
     @State var keyBindings: [KeyBinding] = []
@@ -152,7 +152,7 @@ struct KeyBindingsView: View {
         .onAppear {
             keyBindings = document.keyBindings
         }
-        .onChangeOfFile(at: url) { url in
+        .onChange(ofFileAt: documentConfiguration?.fileURL) { url in
             Task {
                 do {
                     let data = try await Data(asyncContentsOf: url)
@@ -166,5 +166,5 @@ struct KeyBindingsView: View {
 }
 
 #Preview {
-    try! KeyBindingsView(document: KeyBindingsDocument(data: Data(contentsOf: systemKeyBindingsURL)), url: systemKeyBindingsURL)
+    try! KeyBindingsView(document: KeyBindingsDocument(data: Data(contentsOf: systemKeyBindingsURL)))
 }

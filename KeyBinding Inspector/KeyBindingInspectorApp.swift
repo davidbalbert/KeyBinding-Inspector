@@ -46,7 +46,7 @@ struct KeyBindingInspectorApp: App {
 
     var body: some Scene {
         DocumentGroup(viewing: KeyBindingsDocument.self) { configuration in
-            KeyBindingsView(document: configuration.document, url: configuration.fileURL)
+            KeyBindingsView(document: configuration.document)
         }
         Window("Software Update", id: "software-update") {
             UpdateChecker()

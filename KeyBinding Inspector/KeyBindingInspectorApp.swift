@@ -9,20 +9,19 @@ import SwiftUI
 
 let systemKeyBindingsURL = URL(fileURLWithPath: "/System/Library/Frameworks/AppKit.framework/Resources/StandardKeyBinding.dict")
 
-class AppDelegate: NSObject, NSApplicationDelegate {
-    func applicationDidFinishLaunching(_ notification: Notification) {
-        DispatchQueue.main.async {
-            if NSDocumentController.shared.documents.isEmpty {
-                NSDocumentController.shared.openDocument(withContentsOf: systemKeyBindingsURL, display: true) { _, _, _ in }
-            }
+//class AppDelegate: NSObject, NSApplicationDelegate {
+//    func applicationDidFinishLaunching(_ notification: Notification) {
+//        DispatchQueue.main.async {
+//            if NSDocumentController.shared.documents.isEmpty {
+//                NSDocumentController.shared.openDocument(withContentsOf: systemKeyBindingsURL, display: true) { _, _, _ in }
+//            }
+//
+//        }
+//    }
+//}
 
-        }
-    }
-}
-
-@main
 struct KeyBindingInspectorApp: App {
-    @NSApplicationDelegateAdaptor var appDelegate: AppDelegate
+//    @NSApplicationDelegateAdaptor var appDelegate: AppDelegate
     @Environment(\.openDocument) var openDocument
     @Environment(\.openWindow) var openWindow
 
@@ -45,9 +44,9 @@ struct KeyBindingInspectorApp: App {
     }
 
     var body: some Scene {
-        DocumentGroup(viewing: KeyBindingsDocument.self) { configuration in
-            KeyBindingsView(document: configuration.document)
-        }
+//        DocumentGroup(viewing: KeyBindingsDocument.self) { configuration in
+//            KeyBindingsView(document: configuration.document)
+//        }
         Window("Software Update", id: "software-update") {
             UpdateChecker()
         }

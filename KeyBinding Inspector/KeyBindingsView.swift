@@ -32,7 +32,7 @@ extension FocusedValues {
 
 
 struct KeyBindingsView: View {
-    let document: KeyBindingsDocument
+    let document: KeyBindings
     @Environment(\.documentConfiguration) var documentConfiguration: DocumentConfiguration?
 
     @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
@@ -146,25 +146,12 @@ struct KeyBindingsView: View {
             }
         }
         .animation(.easeInOut(duration: 0.1), value: showingAccessoryBar)
-        .onChange(of: document) {
-            keyBindings = document.keyBindings
-        }
         .onAppear {
-            keyBindings = document.keyBindings
-        }
-        .onChange(ofFileAt: documentConfiguration?.fileURL) { url in
-            Task {
-                do {
-                    let data = try await Data(asyncContentsOf: url)
-                    keyBindings = try KeyBindingsDocument(data: data).keyBindings
-                } catch {
-                    print("Failed to reload file", url, error)
-                }
-            }
+            keyBindings = document.bindings
         }
     }
 }
 
 #Preview {
-    try! KeyBindingsView(document: KeyBindingsDocument(data: Data(contentsOf: systemKeyBindingsURL)))
+    try! KeyBindingsView(document: KeyBindings(contentsOf: Data(contentsOf: systemKeyBindingsURL)))
 }

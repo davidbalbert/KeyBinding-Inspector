@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import SwiftUI
 
 class KeyBindings: NSObject {
     var bindings: [KeyBinding]
@@ -53,9 +54,9 @@ class Document: NSDocument {
     }
 
     override func makeWindowControllers() {
-        let w = NSWindow(contentViewController: KeyBindingsViewController(keyBindings: keyBindings))
+        let w = NSWindow(contentViewController: NSHostingController(rootView: KeyBindingsView(document: keyBindings)))
         w.setContentSize(CGSize(width: 800, height: 600))
-        let c = NSWindowController(window: w)
+        let c = WindowController(window: w)
         addWindowController(c)
     }
 

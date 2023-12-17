@@ -7,33 +7,7 @@
 
 import SwiftUI
 
-
-struct SearchFieldFocusedKey: FocusedValueKey {
-    typealias Value = FocusState<Bool>.Binding
-}
-
-extension FocusedValues {
-    var searchFieldFocused: SearchFieldFocusedKey.Value? {
-        get { self[SearchFieldFocusedKey.self] }
-        set { self[SearchFieldFocusedKey.self] = newValue }
-    }
-}
-
-struct ShowingAccessoryBarKey: FocusedValueKey {
-    typealias Value = Binding<Bool>
-}
-
-extension FocusedValues {
-    var showingAccessoryBar: ShowingAccessoryBarKey.Value? {
-        get { self[ShowingAccessoryBarKey.self] }
-        set { self[ShowingAccessoryBarKey.self] = newValue}
-    }
-}
-
-
 struct KeyBindingsView: View {
-    @Environment(ViewModel.self) var viewModel: ViewModel
-
     let document: KeyBindings
 
     @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
@@ -132,19 +106,9 @@ struct KeyBindingsView: View {
         .onChange(of: showingAccessoryBar) {
             transitioning = true
         }
-        .onChange(of: isSearching) {
-            print("a", isSearching)
-            if isSearching {
-                showingAccessoryBar = true
-            }
-            viewModel.isSearching = isSearching
-        }
-        .onChange(of: viewModel.isSearching) {
-            print("b", viewModel.isSearching)
-            if viewModel.isSearching {
-                showingAccessoryBar = true
-            }
-            isSearching = viewModel.isSearching
+        .onReceive(NotificationCenter.default.publisher(for: WindowController.didPerformFindNotification)) { _ in
+            showingAccessoryBar = true
+            isSearching = true
         }
         .onChange(of: transitioning) {
             if !transitioning && !showingAccessoryBar {

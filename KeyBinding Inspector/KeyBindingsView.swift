@@ -32,22 +32,23 @@ extension FocusedValues {
 
 
 struct KeyBindingsView: View {
+    @Environment(ViewModel.self) var viewModel: ViewModel
+
     let document: KeyBindings
-    @Environment(\.documentConfiguration) var documentConfiguration: DocumentConfiguration?
 
     @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
     @State var keyBindings: [KeyBinding] = []
 
-    @State var queryText: String = ""
+    @State var searchText: String = ""
     var query: String {
         if transitioning && !showingAccessoryBar {
             ""
         } else {
-            queryText
+            searchText
         }
     }
 
-    @FocusState var searchFieldFocused: Bool
+    @FocusState var isSearching: Bool
     @State var showingAccessoryBar: Bool = false
     @State var transitioning: Bool = false
 
@@ -120,22 +121,34 @@ struct KeyBindingsView: View {
             }
         }
         .accessoryBar($showingAccessoryBar) {
-            TextField("Search", text: $queryText)
+            TextField("Search", text: $searchText)
                 .textFieldStyle(.accessoryBarSearchField)
-                .focused($searchFieldFocused)
+                .focused($isSearching)
                 .onKeyPress(.escape) {
                     showingAccessoryBar = false
                     return .handled
                 }
         }
-        .focusedSceneValue(\.showingAccessoryBar, $showingAccessoryBar)
-        .focusedSceneValue(\.searchFieldFocused, $searchFieldFocused)
         .onChange(of: showingAccessoryBar) {
             transitioning = true
         }
+        .onChange(of: isSearching) {
+            print("a", isSearching)
+            if isSearching {
+                showingAccessoryBar = true
+            }
+            viewModel.isSearching = isSearching
+        }
+        .onChange(of: viewModel.isSearching) {
+            print("b", viewModel.isSearching)
+            if viewModel.isSearching {
+                showingAccessoryBar = true
+            }
+            isSearching = viewModel.isSearching
+        }
         .onChange(of: transitioning) {
             if !transitioning && !showingAccessoryBar {
-                queryText = ""
+                searchText = ""
             }
         }
         .transaction { t in

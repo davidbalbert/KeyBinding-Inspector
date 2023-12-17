@@ -7,6 +7,17 @@
 
 import SwiftUI
 
+struct WindowControllerKey: EnvironmentKey {
+    static let defaultValue: WindowController? = nil
+}
+
+extension EnvironmentValues {
+    var windowController: WindowController? {
+        get { self[WindowControllerKey.self] }
+        set { self[WindowControllerKey.self] = newValue }
+    }
+}
+
 struct KeyBindingsView: View {
     let document: KeyBindings
 
@@ -25,6 +36,8 @@ struct KeyBindingsView: View {
     @FocusState var isSearching: Bool
     @State var showingAccessoryBar: Bool = false
     @State var transitioning: Bool = false
+
+    @Environment(\.windowController) var windowController: WindowController?
 
     func matchesQuery(_ binding: KeyBinding, _ query: String) -> Bool {
         if query.isEmpty {
@@ -106,7 +119,9 @@ struct KeyBindingsView: View {
         .onChange(of: showingAccessoryBar) {
             transitioning = true
         }
-        .onReceive(NotificationCenter.default.publisher(for: WindowController.didPerformFindNotification)) { _ in
+        // Can't use onCommand because we want this to fire even when our NSWindow is the start of
+        // the responder chain. I wish there was a better way to do this.
+        .onNotification(WindowController.didPerformFindNotification, requiringObject: windowController) { _ in
             showingAccessoryBar = true
             isSearching = true
         }

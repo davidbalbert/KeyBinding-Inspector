@@ -110,9 +110,11 @@ struct KeyBindingsView: View {
         }
         // Can't use onCommand because we want this to fire even when our NSWindow is the start of
         // the responder chain. I wish there was a better way to do this.
-        .onNotification(WindowController.didPerformFindNotification, requiringObject: windowController) { _ in
-            showingAccessoryBar = true
-            isSearching = true
+        .onReceive(NotificationCenter.default.publisher(for: WindowController.didPerformFindNotification)) { notification in
+            if let wc = notification.object as? WindowController, wc == windowController {
+                showingAccessoryBar = true
+                isSearching = true
+            }
         }
         .onChange(of: transitioning) {
             if !transitioning && !showingAccessoryBar {

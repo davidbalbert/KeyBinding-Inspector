@@ -54,14 +54,14 @@ class Document: NSDocument {
     }
 
     override func makeWindowControllers() {
-        let w = NSWindow()
-        w.setContentSize(CGSize(width: 800, height: 600))
-        let c = WindowController(window: w)
+        let c = WindowController()
 
         let rootView = KeyBindingsView(document: keyBindings)
             .environment(\.windowController, c)
-        w.contentView = NSHostingView(rootView: rootView)
 
+        let w = NSWindow(contentViewController: NSHostingController(rootView: rootView))
+        w.setContentSize(CGSize(width: 800, height: 600))
+        c.window = w
         addWindowController(c)
     }
 

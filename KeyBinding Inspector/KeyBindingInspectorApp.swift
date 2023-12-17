@@ -25,8 +25,8 @@ struct KeyBindingInspectorApp: App {
     @Environment(\.openDocument) var openDocument
     @Environment(\.openWindow) var openWindow
 
-    @FocusedValue(\.searchFieldFocused) var searchFieldFocused: FocusState<Bool>.Binding?
-    @FocusedBinding(\.showingAccessoryBar) var showingAccessoryBar: Bool?
+//    @FocusedValue(\.searchFieldFocused) var searchFieldFocused: FocusState<Bool>.Binding?
+//    @FocusedBinding(\.showingAccessoryBar) var showingAccessoryBar: Bool?
 
     var userKeyBindingsURL: URL? {
         guard let passInfo = getpwuid(getuid()) else {
@@ -51,38 +51,38 @@ struct KeyBindingInspectorApp: App {
             UpdateChecker()
         }
         .windowResizability(.contentSize)
-        .commands {
-            CommandGroup(after: .appSettings) {
-                Button("Check For Updates") {
-                    openWindow(id: "software-update")
-                }
-            }
-
-            CommandGroup(after: .newItem) {
-                Button("Open System Key Bindings") {
-                    Task {
-                        try await openDocument(at: systemKeyBindingsURL)
-                    }
-                }
-                .keyboardShortcut("o", modifiers: [.command, .option])
-
-                Button("Open User Key Bindings") {
-                     Task {
-                         try await openDocument(at: userKeyBindingsURL!)
-                     }
-                }
-                .keyboardShortcut("o", modifiers: [.command, .shift, .option])
-                .disabled(!userKeyBindingsExists)
-            }
-
-            CommandGroup(after: .textEditing) {
-                Button("Find") {
-                    showingAccessoryBar = true
-                    searchFieldFocused?.wrappedValue = true
-                }
-                .disabled(showingAccessoryBar == nil)
-                .keyboardShortcut("f")
-            }
-        }
+//        .commands {
+//            CommandGroup(after: .appSettings) {
+//                Button("Check For Updates") {
+//                    openWindow(id: "software-update")
+//                }
+//            }
+//
+//            CommandGroup(after: .newItem) {
+//                Button("Open System Key Bindings") {
+//                    Task {
+//                        try await openDocument(at: systemKeyBindingsURL)
+//                    }
+//                }
+//                .keyboardShortcut("o", modifiers: [.command, .option])
+//
+//                Button("Open User Key Bindings") {
+//                     Task {
+//                         try await openDocument(at: userKeyBindingsURL!)
+//                     }
+//                }
+//                .keyboardShortcut("o", modifiers: [.command, .shift, .option])
+//                .disabled(!userKeyBindingsExists)
+//            }
+//
+//            CommandGroup(after: .textEditing) {
+//                Button("Find") {
+//                    showingAccessoryBar = true
+//                    searchFieldFocused?.wrappedValue = true
+//                }
+//                .disabled(showingAccessoryBar == nil)
+//                .keyboardShortcut("f")
+//            }
+//        }
     }
 }

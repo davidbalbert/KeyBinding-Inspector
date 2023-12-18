@@ -10,7 +10,7 @@
 		63A7B4B22B28E3A800CF3A8B /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B12B28E3A800CF3A8B /* Foundation+Extensions.swift */; };
 		63A7B4B42B28E41200CF3A8B /* FileWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B32B28E41200CF3A8B /* FileWatcher.swift */; };
 		63A7B4B62B2925CA00CF3A8B /* AccessoryBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7B4B52B2925CA00CF3A8B /* AccessoryBar.swift */; };
-		63C25F182B2A709F007AFF64 /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C25F172B2A709F007AFF64 /* UpdateChecker.swift */; };
+		63C25F182B2A709F007AFF64 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C25F172B2A709F007AFF64 /* Updater.swift */; };
 		63C25F1C2B2E24CF007AFF64 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C25F1B2B2E24CF007AFF64 /* MainMenu.xib */; };
 		63C25F1E2B2E254C007AFF64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C25F1D2B2E254C007AFF64 /* AppDelegate.swift */; };
 		63C25F202B2E2774007AFF64 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C25F1F2B2E2774007AFF64 /* Document.swift */; };
@@ -50,7 +50,7 @@
 		63A7B4B12B28E3A800CF3A8B /* Foundation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
 		63A7B4B32B28E41200CF3A8B /* FileWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWatcher.swift; sourceTree = "<group>"; };
 		63A7B4B52B2925CA00CF3A8B /* AccessoryBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryBar.swift; sourceTree = "<group>"; };
-		63C25F172B2A709F007AFF64 /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateChecker.swift; sourceTree = "<group>"; };
+		63C25F172B2A709F007AFF64 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		63C25F1B2B2E24CF007AFF64 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		63C25F1D2B2E254C007AFF64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63C25F1F2B2E2774007AFF64 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 				63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */,
 				63F891692B27D63500F1572D /* KeyBindingsDocument.swift */,
 				63F8913F2B2795D100F1572D /* KeyBindingsView.swift */,
-				63C25F172B2A709F007AFF64 /* UpdateChecker.swift */,
+				63C25F172B2A709F007AFF64 /* Updater.swift */,
 				63C25F602B2F9A45007AFF64 /* WindowController.swift */,
 				63F891412B2795D200F1572D /* Assets.xcassets */,
 				63C25F1B2B2E24CF007AFF64 /* MainMenu.xib */,
@@ -309,7 +309,7 @@
 				63A7B4B42B28E41200CF3A8B /* FileWatcher.swift in Sources */,
 				63F8913E2B2795D100F1572D /* KeyBindingInspectorApp.swift in Sources */,
 				63A7B4B22B28E3A800CF3A8B /* Foundation+Extensions.swift in Sources */,
-				63C25F182B2A709F007AFF64 /* UpdateChecker.swift in Sources */,
+				63C25F182B2A709F007AFF64 /* Updater.swift in Sources */,
 				63F8916C2B27D65500F1572D /* KeyBinding.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

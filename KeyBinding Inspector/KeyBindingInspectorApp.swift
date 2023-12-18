@@ -48,7 +48,7 @@ struct KeyBindingInspectorApp: App {
 //            KeyBindingsView(document: configuration.document)
 //        }
         Window("Software Update", id: "software-update") {
-            UpdateChecker()
+            Updater(state: UpdaterState())
         }
         .windowResizability(.contentSize)
 //        .commands {

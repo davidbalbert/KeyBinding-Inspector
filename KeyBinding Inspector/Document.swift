@@ -7,43 +7,46 @@
 
 import Cocoa
 import SwiftUI
-
-class KeyBindings: NSObject {
-    var bindings: [KeyBinding]
-
-    init(_ keyBindings: [KeyBinding]) {
-        bindings = keyBindings
-    }
-
-    override convenience init() {
-        self.init([])
-    }
-
-    init(contentsOf data: Data) throws {
-        guard let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) else {
-            throw CocoaError(.fileReadCorruptFile)
-        }
-
-        guard let dict = plist as? [String: Any] else {
-            throw CocoaError(.fileReadCorruptFile)
-        }
-
-        bindings = dict.map { (key, value) in
-            let actions: [String]
-            if let s = value as? String {
-                actions = [s]
-            } else if let a = value as? [String] {
-                actions = a
-            } else {
-                actions = []
-            }
-            return KeyBinding(key: key, actions: actions)
-        }
-    }
-}
+import CryptoKit
 
 class Document: NSDocument {
-    @objc var keyBindings: KeyBindings = KeyBindings()
+    @Observable
+    class Content {
+        var keyBindings: [KeyBinding]
+
+        convenience init() {
+            self.init([])
+        }
+
+        init(_ keyBindings: [KeyBinding]) {
+            self.keyBindings = keyBindings
+        }
+
+        init(contentsOf data: Data) throws {
+            guard let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) else {
+                throw CocoaError(.fileReadCorruptFile)
+            }
+
+            guard let dict = plist as? [String: Any] else {
+                throw CocoaError(.fileReadCorruptFile)
+            }
+
+            keyBindings = dict.map { (key, value) in
+                let actions: [String]
+                if let s = value as? String {
+                    actions = [s]
+                } else if let a = value as? [String] {
+                    actions = a
+                } else {
+                    actions = []
+                }
+                return KeyBinding(key: key, actions: actions)
+            }
+        }
+    }
+
+    var content: Content = Content()
+    var digest: SHA256.Digest?
 
     override class func canConcurrentlyReadDocuments(ofType typeName: String) -> Bool {
         true
@@ -55,7 +58,7 @@ class Document: NSDocument {
 
     override func makeWindowControllers() {
         let c = WindowController()
-        let rootView = KeyBindingsView(document: keyBindings)
+        let rootView = KeyBindingsView(content: content)
             .environment(\.windowController, c)
         let w = NSWindow(contentViewController: NSHostingController(rootView: rootView))
         w.setContentSize(CGSize(width: 800, height: 600))
@@ -88,6 +91,34 @@ class Document: NSDocument {
     }
     
     override func read(from data: Data, ofType typeName: String) throws {
-        keyBindings = try KeyBindings(contentsOf: data)
+        content.keyBindings = try Content(contentsOf: data).keyBindings
+        digest = SHA256.hash(data: data)
+    }
+
+    override func presentedItemDidChange() {
+        guard let fileURL, let fileType else {
+            return
+        }
+
+        var error: NSError?
+        NSFileCoordinator(filePresenter: self).coordinate(readingItemAt: fileURL, options: .withoutChanges, error: &error) { url in
+            guard let data = try? Data(contentsOf: url) else {
+                Swift.print("Document.presentedItemDidChange(): Error reading \(url)")
+                return
+            }
+
+            let d = SHA256.hash(data: data)
+
+            if digest != d {
+                DispatchQueue.main.async { [self] in
+                    digest = d
+                    do {
+                        try revert(toContentsOf: url, ofType: fileType)
+                    } catch {
+                        Swift.print("Document.presentedItemDidChange(): Error reverting \(url): \(error)")
+                    }
+                }
+            }
+        }
     }
 }

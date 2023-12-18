@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct KeyBindingsView: View {
-    let document: KeyBindings
+    let content: Document.Content
 
     @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
     @State var keyBindings: [KeyBinding] = []
@@ -130,11 +130,14 @@ struct KeyBindingsView: View {
         }
         .animation(.easeInOut(duration: 0.1), value: showingAccessoryBar)
         .onAppear {
-            keyBindings = document.bindings
+            keyBindings = content.keyBindings
+        }
+        .onChange(of: content.keyBindings) {
+            keyBindings = content.keyBindings
         }
     }
 }
 
 #Preview {
-    try! KeyBindingsView(document: KeyBindings(contentsOf: Data(contentsOf: systemKeyBindingsURL)))
+    try! KeyBindingsView(content: Document.Content(contentsOf: Data(contentsOf: systemKeyBindingsURL)))
 }

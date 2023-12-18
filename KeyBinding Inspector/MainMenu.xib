@@ -86,6 +86,18 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Open System Key Bindings" keyEquivalent="o" id="HDM-q7-128">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="openSystemKeyBindings:" target="-1" id="0uE-aK-JN5"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Open User Key Bindings" keyEquivalent="O" id="cgE-Gi-6ZT">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="openUserKeyBindings:" target="-1" id="M8s-Cx-JaQ"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>

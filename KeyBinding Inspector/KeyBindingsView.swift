@@ -139,5 +139,6 @@ struct KeyBindingsView: View {
 }
 
 #Preview {
-    try! KeyBindingsView(content: Document.Content(contentsOf: Data(contentsOf: systemKeyBindingsURL)))
+    let systemKeyBindingsURL = URL(fileURLWithPath: "/System/Library/Frameworks/AppKit.framework/Resources/StandardKeyBinding.dict")
+    return try! KeyBindingsView(content: Document.Content(contentsOf: Data(contentsOf: systemKeyBindingsURL)))
 }

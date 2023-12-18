@@ -37,8 +37,14 @@ final class KeyBindingTests: XCTestCase {
         t("@\u{08}", "⌘⌫")
         t("@\u{7f}", "⌘⌫")
         t("@\\010", "⌘⌫")
-        t("@\u{f728}", "⌘⌦")
+        t("@\u{f728}", "⌘⌦ (Fn-Delete)")
         t("@\u{f700}", "⌘Up Arrow")
         t("@\u{f701}", "⌘Down Arrow")
+        t("@$.", "⇧⌘.")
+        t("@>", "⌘>")
+        t("\u{f729}", "Home (Fn-Left Arrow)")
+        t("\u{f72b}", "End (Fn-Right Arrow)")
+        t("\u{f72c}", "Page Up (Fn-Up Arrow)")
+        t("\u{f72d}", "Page Down (Fn-Down Arrow)")
     }
 }

@@ -15,11 +15,11 @@
 		63C25F1E2B2E254C007AFF64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C25F1D2B2E254C007AFF64 /* AppDelegate.swift */; };
 		63C25F202B2E2774007AFF64 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C25F1F2B2E2774007AFF64 /* Document.swift */; };
 		63C25F612B2F9A45007AFF64 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C25F602B2F9A45007AFF64 /* WindowController.swift */; };
+		63C25F752B30FA52007AFF64 /* KeyBindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C25F722B30FA48007AFF64 /* KeyBindingTests.swift */; };
 		63F8913E2B2795D100F1572D /* KeyBindingInspectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */; };
 		63F891402B2795D100F1572D /* KeyBindingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8913F2B2795D100F1572D /* KeyBindingsView.swift */; };
 		63F891422B2795D200F1572D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63F891412B2795D200F1572D /* Assets.xcassets */; };
 		63F891452B2795D200F1572D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63F891442B2795D200F1572D /* Preview Assets.xcassets */; };
-		63F891502B2795D200F1572D /* KeyBinding_InspectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8914F2B2795D200F1572D /* KeyBinding_InspectorTests.swift */; };
 		63F8915A2B2795D200F1572D /* KeyBinding_InspectorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F891592B2795D200F1572D /* KeyBinding_InspectorUITests.swift */; };
 		63F8915C2B2795D200F1572D /* KeyBinding_InspectorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F8915B2B2795D200F1572D /* KeyBinding_InspectorUITestsLaunchTests.swift */; };
 		63F8916A2B27D63500F1572D /* KeyBindingsDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F891692B27D63500F1572D /* KeyBindingsDocument.swift */; };
@@ -55,6 +55,7 @@
 		63C25F1D2B2E254C007AFF64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63C25F1F2B2E2774007AFF64 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		63C25F602B2F9A45007AFF64 /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
+		63C25F722B30FA48007AFF64 /* KeyBindingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindingTests.swift; sourceTree = "<group>"; };
 		63E26D6E2B2A3DD4001221AE /* screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot.png; sourceTree = "<group>"; };
 		63F8913A2B2795D100F1572D /* KeyBinding Inspector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KeyBinding Inspector.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F8913D2B2795D100F1572D /* KeyBindingInspectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindingInspectorApp.swift; sourceTree = "<group>"; };
@@ -63,7 +64,6 @@
 		63F891442B2795D200F1572D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		63F891462B2795D200F1572D /* KeyBinding_Inspector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KeyBinding_Inspector.entitlements; sourceTree = "<group>"; };
 		63F8914B2B2795D200F1572D /* KeyBinding InspectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KeyBinding InspectorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		63F8914F2B2795D200F1572D /* KeyBinding_InspectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBinding_InspectorTests.swift; sourceTree = "<group>"; };
 		63F891552B2795D200F1572D /* KeyBinding InspectorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KeyBinding InspectorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F891592B2795D200F1572D /* KeyBinding_InspectorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBinding_InspectorUITests.swift; sourceTree = "<group>"; };
 		63F8915B2B2795D200F1572D /* KeyBinding_InspectorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBinding_InspectorUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 		63F8914E2B2795D200F1572D /* KeyBinding InspectorTests */ = {
 			isa = PBXGroup;
 			children = (
-				63F8914F2B2795D200F1572D /* KeyBinding_InspectorTests.swift */,
+				63C25F722B30FA48007AFF64 /* KeyBindingTests.swift */,
 			);
 			path = "KeyBinding InspectorTests";
 			sourceTree = "<group>";
@@ -318,7 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63F891502B2795D200F1572D /* KeyBinding_InspectorTests.swift in Sources */,
+				63C25F752B30FA52007AFF64 /* KeyBindingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

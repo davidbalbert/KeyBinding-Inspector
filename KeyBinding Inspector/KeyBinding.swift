@@ -48,7 +48,7 @@ let specialKeys: [NSEvent.SpecialKey: String] = [
     .f34: "F34",
     .f35: "F35",
     .insert: "Insert",
-    .deleteForward: "Delete Forward",
+    .deleteForward: "⌦",
     .home: "Home",
     .begin: "Begin",
     .end: "End",
@@ -80,16 +80,6 @@ let specialKeys: [NSEvent.SpecialKey: String] = [
     .find: "Find",
     .help: "Help",
     .modeSwitch: "Mode Switch",
-    .enter: "Enter",
-    .backspace: "Backspace",
-    .tab: "Tab",
-    .newline: "Newline",
-    .formFeed: "Form Feed",
-    .carriageReturn: "Carriage Return",
-    .backTab: "Back Tab",
-    .delete: "Delete",
-    .lineSeparator: "Line Separator",
-    .paragraphSeparator: "Paragraph Separator",
 ]
 
 let controlCharacters: [Int: String] = [
@@ -101,12 +91,12 @@ let controlCharacters: [Int: String] = [
     0x05: "Enq",
     0x06: "Ack",
     0x07: "Bel",
-    0x08: "Backspace",
+    0x08: "⌫",
     0x09: "Tab",
-    0x0a: "Newline",
+    0x0a: "Return",
     0x0b: "Vt",
     0x0c: "Ff",
-    0x0d: "Carriage Return",
+    0x0d: "Return",
     0x0e: "So",
     0x0f: "Si",
     0x10: "Dle",
@@ -126,7 +116,7 @@ let controlCharacters: [Int: String] = [
     0x1e: "Rs",
     0x1f: "Us",
     0x20: "Space",
-    0x7f: "Delete",
+    0x7f: "⌫",
 ]
 
 let escapedControlCharacters: [Int: String] = [
@@ -186,6 +176,20 @@ struct KeyBinding: Identifiable, Equatable {
             return ""
         }
 
+        // "Text System Defaults and Key Bindings" says "One or more key modifiers, which
+        // must precede one of the other key-identifier elements."
+        //
+        // But StandardKeyBinding.dict includes "^" and "@" bound to noop:, both which are
+        // modifiers and don't precede anything.
+        //
+        // I'm not sure what this means, but I'm treating them as if they have no modifiers
+        // and I highlight them in red to show that I'm confused.
+        //
+        // Ref: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/TextDefaultsBindings/TextDefaultsBindings.html
+        if modifierCount == key.count {
+            return ""
+        }
+
         var s = ""
 
         if key.contains("^") {
@@ -201,20 +205,6 @@ struct KeyBinding: Identifiable, Equatable {
             s += "⌘"
         }
 
-        // "Text System Defaults and Key Bindings" says "One or more key modifiers, which
-        // must precede one of the other key-identifier elements."
-        //
-        // But StandardKeyBinding.dict includes "^" and "@" bound to noop:, both which are
-        // modifiers and don't precede anything.
-        //
-        // I'm not sure what this means, but I'm treating them as if they have no modifiers
-        // and I highlight them in red to show that I'm confused.
-        //
-        // Ref: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/TextDefaultsBindings/TextDefaultsBindings.html
-        if s.count == key.count {
-            return ""
-        }
-
         return s
     }
 
@@ -228,7 +218,9 @@ struct KeyBinding: Identifiable, Equatable {
         } else if let match = key.firstMatch(of: /\\(\d+)/) {
             // parse octal digit
             let octal = match.1
-            let value = Int(octal, radix: 8)!
+            guard let value = Int(octal, radix: 8) else {
+                return "\\(octal)"
+            }
             let scalar = Unicode.Scalar(value)!
 
             assert(scalar.isASCII)

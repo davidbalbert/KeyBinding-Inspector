@@ -356,7 +356,7 @@
                         <items>
                             <menuItem title="KeyBinding Inspector Help" keyEquivalent="?" id="FKE-Sm-Kum">
                                 <connections>
-                                    <action selector="showHelp:" target="-1" id="y7X-2Q-9no"/>
+                                    <action selector="openReadme:" target="-1" id="x0m-uR-w0a"/>
                                 </connections>
                             </menuItem>
                         </items>

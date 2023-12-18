@@ -57,18 +57,21 @@ class Document: NSDocument {
     }
 
     override func makeWindowControllers() {
-        let c = WindowController()
-        let rootView = KeyBindingsView(content: content)
-            .environment(\.windowController, c)
-        let w = NSWindow(contentViewController: NSHostingController(rootView: rootView))
-        w.setContentSize(CGSize(width: 800, height: 600))
-        c.window = w
-        addWindowController(c)
-    }
+        let w = NSWindow(contentViewController: NSViewController())
+        let wc = WindowController(window: w)
 
-    override func windowControllerDidLoadNib(_ aController: NSWindowController) {
-        super.windowControllerDidLoadNib(aController)
-        // Add any code here that needs to be executed once the windowController has loaded the document's window.
+        let rootView = KeyBindingsView(content: content)
+            .environment(\.windowController, wc)
+        w.contentViewController = NSHostingController(rootView: rootView)
+        w.setContentSize(CGSize(width: 800, height: 500))
+
+        if let p = NSApp.mainWindow?.cascadeTopLeft(from: .zero) {
+            w.cascadeTopLeft(from: p)
+        } else {
+            w.center()
+        }
+
+        addWindowController(wc)
     }
 
     override func data(ofType typeName: String) throws -> Data {

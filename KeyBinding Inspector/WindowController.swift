@@ -22,10 +22,6 @@ extension EnvironmentValues {
 class WindowController: NSWindowController {
     static let didPerformFindNotification = Notification.Name("didPerformFindNotification")
 
-    override func windowDidLoad() {
-        super.windowDidLoad()
-    }
-
     @objc func find(_ sender: Any?) {
         NotificationCenter.default.post(name: Self.didPerformFindNotification, object: self)
     }

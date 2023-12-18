@@ -9,9 +9,7 @@ import SwiftUI
 
 struct KeyBindingsView: View {
     let content: Document.Content
-
     @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
-    @State var keyBindings: [KeyBinding] = []
 
     @State var searchText: String = ""
     var query: String {
@@ -43,7 +41,7 @@ struct KeyBindingsView: View {
     var filteredKeyBindings: [KeyBinding] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        var bindings = keyBindings
+        var bindings = content.keyBindings
         bindings.removeAll {
             !matchesQuery($0, q)
         }
@@ -129,12 +127,6 @@ struct KeyBindingsView: View {
             }
         }
         .animation(.easeInOut(duration: 0.1), value: showingAccessoryBar)
-        .onAppear {
-            keyBindings = content.keyBindings
-        }
-        .onChange(of: content.keyBindings) {
-            keyBindings = content.keyBindings
-        }
     }
 }
 

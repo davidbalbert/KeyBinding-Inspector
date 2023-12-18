@@ -15,7 +15,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var updaterWindow: NSWindow?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        print("didFinishLaunching")
+        Task {
+            if NSDocumentController.shared.documents.isEmpty {
+                open(url: systemKeyBindingsURL)
+            }
+        }
+    }
+
+    func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
+        true
     }
 
     @objc func checkForUpdates(_ sender: Any?) {

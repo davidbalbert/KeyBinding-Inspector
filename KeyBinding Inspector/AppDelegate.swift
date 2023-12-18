@@ -79,3 +79,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 }
+
+extension AppDelegate: NSMenuItemValidation {
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(openUserKeyBindings(_:)) {
+            return userKeyBindingsExists
+        }
+        return true
+    }
+}

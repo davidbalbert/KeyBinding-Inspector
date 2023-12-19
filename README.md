@@ -8,6 +8,10 @@ A tool to inspect [key bindings for the macOS text system](https://developer.app
 
 You can [download the latest version](https://github.com/davidbalbert/KeyBinding-Inspector/releases/latest) from the Releases page.
 
+## Limitations
+
+No support for nested dictionaries, which are required for multi-keystroke bindings, and no editing support.
+
 ## System requirements
 
 KeyBinding Inspector requires macOS Sonoma or later.

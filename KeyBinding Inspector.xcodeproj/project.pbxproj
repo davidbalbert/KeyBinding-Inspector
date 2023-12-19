@@ -475,7 +475,7 @@
 				CODE_SIGN_ENTITLEMENTS = "KeyBinding Inspector/KeyBinding_Inspector.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"KeyBinding Inspector/Preview Content\"";
 				DEVELOPMENT_TEAM = 9K689XE65M;
@@ -508,7 +508,7 @@
 				CODE_SIGN_ENTITLEMENTS = "KeyBinding Inspector/KeyBinding_Inspector.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"KeyBinding Inspector/Preview Content\"";
 				DEVELOPMENT_TEAM = 9K689XE65M;

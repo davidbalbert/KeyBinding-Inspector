@@ -7,49 +7,24 @@
 
 import SwiftUI
 
-
-struct SearchFieldFocusedKey: FocusedValueKey {
-    typealias Value = FocusState<Bool>.Binding
-}
-
-extension FocusedValues {
-    var searchFieldFocused: SearchFieldFocusedKey.Value? {
-        get { self[SearchFieldFocusedKey.self] }
-        set { self[SearchFieldFocusedKey.self] = newValue }
-    }
-}
-
-struct ShowingAccessoryBarKey: FocusedValueKey {
-    typealias Value = Binding<Bool>
-}
-
-extension FocusedValues {
-    var showingAccessoryBar: ShowingAccessoryBarKey.Value? {
-        get { self[ShowingAccessoryBarKey.self] }
-        set { self[ShowingAccessoryBarKey.self] = newValue}
-    }
-}
-
-
 struct KeyBindingsView: View {
-    let document: KeyBindingsDocument
-    @Environment(\.documentConfiguration) var documentConfiguration: DocumentConfiguration?
-
+    let content: Document.Content
     @State var sortOrder = [KeyPathComparator(\KeyBinding.keyWithoutModifiers)]
-    @State var keyBindings: [KeyBinding] = []
 
-    @State var queryText: String = ""
+    @State var searchText: String = ""
     var query: String {
         if transitioning && !showingAccessoryBar {
             ""
         } else {
-            queryText
+            searchText
         }
     }
 
-    @FocusState var searchFieldFocused: Bool
+    @FocusState var isSearching: Bool
     @State var showingAccessoryBar: Bool = false
     @State var transitioning: Bool = false
+
+    @Environment(\.windowController) var windowController: WindowController?
 
     func matchesQuery(_ binding: KeyBinding, _ query: String) -> Bool {
         if query.isEmpty {
@@ -66,7 +41,7 @@ struct KeyBindingsView: View {
     var filteredKeyBindings: [KeyBinding] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        var bindings = keyBindings
+        var bindings = content.keyBindings
         bindings.removeAll {
             !matchesQuery($0, q)
         }
@@ -120,22 +95,28 @@ struct KeyBindingsView: View {
             }
         }
         .accessoryBar($showingAccessoryBar) {
-            TextField("Search", text: $queryText)
+            TextField("Search", text: $searchText)
                 .textFieldStyle(.accessoryBarSearchField)
-                .focused($searchFieldFocused)
+                .focused($isSearching)
                 .onKeyPress(.escape) {
                     showingAccessoryBar = false
                     return .handled
                 }
         }
-        .focusedSceneValue(\.showingAccessoryBar, $showingAccessoryBar)
-        .focusedSceneValue(\.searchFieldFocused, $searchFieldFocused)
         .onChange(of: showingAccessoryBar) {
             transitioning = true
         }
+        // Can't use onCommand because we want this to fire even when our NSWindow is the start of
+        // the responder chain. I wish there was a better way to do this.
+        .onReceive(NotificationCenter.default.publisher(for: WindowController.didPerformFindNotification)) { notification in
+            if let wc = notification.object as? WindowController, wc == windowController {
+                showingAccessoryBar = true
+                isSearching = true
+            }
+        }
         .onChange(of: transitioning) {
             if !transitioning && !showingAccessoryBar {
-                queryText = ""
+                searchText = ""
             }
         }
         .transaction { t in
@@ -146,25 +127,10 @@ struct KeyBindingsView: View {
             }
         }
         .animation(.easeInOut(duration: 0.1), value: showingAccessoryBar)
-        .onChange(of: document) {
-            keyBindings = document.keyBindings
-        }
-        .onAppear {
-            keyBindings = document.keyBindings
-        }
-        .onChange(ofFileAt: documentConfiguration?.fileURL) { url in
-            Task {
-                do {
-                    let data = try await Data(asyncContentsOf: url)
-                    keyBindings = try KeyBindingsDocument(data: data).keyBindings
-                } catch {
-                    print("Failed to reload file", url, error)
-                }
-            }
-        }
     }
 }
 
 #Preview {
-    try! KeyBindingsView(document: KeyBindingsDocument(data: Data(contentsOf: systemKeyBindingsURL)))
+    let systemKeyBindingsURL = URL(fileURLWithPath: "/System/Library/Frameworks/AppKit.framework/Resources/StandardKeyBinding.dict")
+    return try! KeyBindingsView(content: Document.Content(contentsOf: Data(contentsOf: systemKeyBindingsURL)))
 }

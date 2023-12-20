@@ -20,11 +20,14 @@ struct KeyBindingsView: View {
         }
     }
 
-    @FocusState var isSearching: Bool
+    enum Focus: Hashable {
+        case search
+        case table
+    }
+
+    @FocusState var focus: Focus?
     @State var showingAccessoryBar: Bool = false
     @State var transitioning: Bool = false
-
-    @Environment(\.windowController) var windowController: WindowController?
 
     func matchesQuery(_ binding: KeyBinding, _ query: String) -> Bool {
         if query.isEmpty {
@@ -94,25 +97,24 @@ struct KeyBindingsView: View {
                 Text(highlight(b.formattedActions))
             }
         }
+        .focused($focus, equals: .table)
+        .defaultFocus($focus, .table)
         .accessoryBar($showingAccessoryBar) {
             TextField("Search", text: $searchText)
                 .textFieldStyle(.accessoryBarSearchField)
-                .focused($isSearching)
+                .focused($focus, equals: .search)
                 .onKeyPress(.escape) {
                     showingAccessoryBar = false
+                    focus = .table
                     return .handled
                 }
         }
         .onChange(of: showingAccessoryBar) {
             transitioning = true
         }
-        // Can't use onCommand because we want this to fire even when our NSWindow is the start of
-        // the responder chain. I wish there was a better way to do this.
-        .onReceive(NotificationCenter.default.publisher(for: WindowController.didPerformFindNotification)) { notification in
-            if let wc = notification.object as? WindowController, wc == windowController {
-                showingAccessoryBar = true
-                isSearching = true
-            }
+        .onCommand(#selector(NSResponder.performTextFinderAction)) {
+            showingAccessoryBar = true
+            focus = .search
         }
         .onChange(of: transitioning) {
             if !transitioning && !showingAccessoryBar {

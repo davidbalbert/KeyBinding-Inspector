@@ -57,13 +57,12 @@ class Document: NSDocument {
     }
 
     override func makeWindowControllers() {
-        let w = NSWindow(contentViewController: NSViewController())
-        let wc = WindowController(window: w)
-
         let rootView = KeyBindingsView(content: content)
-            .environment(\.windowController, wc)
-        w.contentViewController = NSHostingController(rootView: rootView)
+        let vc = NSHostingController(rootView: rootView)
+        let w = NSWindow(contentViewController: vc)
         w.setContentSize(CGSize(width: 800, height: 500))
+
+        let wc = NSWindowController(window: w)
 
         if let p = NSApp.mainWindow?.cascadeTopLeft(from: .zero) {
             w.cascadeTopLeft(from: p)

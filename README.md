@@ -1,4 +1,4 @@
-![The KeyBinding Inspector icon](/icon.png?raw=true)
+<img srcset="/icon.png?raw=true 2x" alt="The KeyBinding Inspector icon">
 
 # KeyBinding Inspector
 

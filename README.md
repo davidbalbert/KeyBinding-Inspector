@@ -1,3 +1,5 @@
+![The KeyBinding Inspector icon](/icon.png?raw=true)
+
 # KeyBinding Inspector
 
 ![A screenshot of KeyBinding Inspector](/screenshot.png?raw=true)

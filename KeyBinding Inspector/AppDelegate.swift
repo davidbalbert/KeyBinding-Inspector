@@ -32,12 +32,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return FileManager.default.fileExists(atPath: path.path)
     }
 
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidFinishRestoringWindows), name: NSApplication.didFinishRestoringWindowsNotification, object: NSApplication.shared)
+    }
 
-    func applicationDidFinishLaunching(_ notification: Notification) {
-        Task {
-            if NSDocumentController.shared.documents.isEmpty {
-                open(fileURL: systemKeyBindingsURL)
-            }
+    @objc func applicationDidFinishRestoringWindows(_ notification: Notification) {
+        if NSDocumentController.shared.documents.isEmpty {
+            open(fileURL: systemKeyBindingsURL)
         }
     }
 

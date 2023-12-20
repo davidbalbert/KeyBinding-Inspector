@@ -156,151 +156,168 @@ let escapedControlCharacters: [Int: String] = [
     0x7f: "<DEL>",
 ]
 
-struct KeyBinding: Identifiable, Equatable {
-    var key: String
-    var actions: [String]
+fileprivate func modifierCount(_ key: String) -> Int {
+    key.filter { "^~$@".contains($0) }.count
+}
 
-    var id: String { key }
-
-    var formattedActions: String {
-        actions.joined(separator: ", ")
+fileprivate func parseModifiers(_ key: String) -> String {
+    if key.isEmpty {
+        return ""
     }
 
-    var modifierCount: Int {
-        // count instances of ^~$@ in key
-        key.filter { "^~$@".contains($0) }.count
+    // "Text System Defaults and Key Bindings" says "One or more key modifiers, which
+    // must precede one of the other key-identifier elements."
+    //
+    // But StandardKeyBinding.dict includes "^" and "@" bound to noop:, both which are
+    // modifiers and don't precede anything.
+    //
+    // I'm not sure what this means, but I'm treating them as if they have no modifiers
+    // and I highlight them in red to show that I'm confused.
+    //
+    // Ref: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/TextDefaultsBindings/TextDefaultsBindings.html
+    if modifierCount(key) == key.count {
+        return ""
     }
 
-    var modifiers: String {
-        if key.isEmpty {
-            return ""
-        }
+    var s = ""
 
-        // "Text System Defaults and Key Bindings" says "One or more key modifiers, which
-        // must precede one of the other key-identifier elements."
-        //
-        // But StandardKeyBinding.dict includes "^" and "@" bound to noop:, both which are
-        // modifiers and don't precede anything.
-        //
-        // I'm not sure what this means, but I'm treating them as if they have no modifiers
-        // and I highlight them in red to show that I'm confused.
-        //
-        // Ref: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/TextDefaultsBindings/TextDefaultsBindings.html
-        if modifierCount == key.count {
-            return ""
-        }
-
-        var s = ""
-
-        if key.contains("^") {
-            s += "⌃"
-        }
-        if key.contains("~") {
-            s += "⌥"
-        }
-        if key.contains("$") || key.last!.isUppercase {
-            s += "⇧"
-        }
-        if key.contains("@") {
-            s += "⌘"
-        }
-
-        return s
+    if key.contains("^") {
+        s += "⌃"
+    }
+    if key.contains("~") {
+        s += "⌥"
+    }
+    if key.contains("$") || key.last!.isUppercase {
+        s += "⇧"
+    }
+    if key.contains("@") {
+        s += "⌘"
     }
 
-    var keyWithoutModifiers: String {
-        if key.isEmpty {
-            return ""
-        }
+    return s
+}
 
-        if let name = specialKeys[NSEvent.SpecialKey(rawValue: Int(key.unicodeScalars.last!.value))] {
+fileprivate func parseKeyWithoutModifiers(_ key: String) -> String {
+    if key.isEmpty {
+        return ""
+    }
+
+    if let name = specialKeys[NSEvent.SpecialKey(rawValue: Int(key.unicodeScalars.last!.value))] {
+        return name
+    } else if let match = key.firstMatch(of: /\\(\d+)/) {
+        // parse octal digit
+        let octal = match.1
+        guard let value = Int(octal, radix: 8) else {
+            return "\\(octal)"
+        }
+        let scalar = Unicode.Scalar(value)!
+
+        assert(scalar.isASCII)
+
+        if let name = scalar.properties.name, name != "" {
             return name
-        } else if let match = key.firstMatch(of: /\\(\d+)/) {
-            // parse octal digit
-            let octal = match.1
-            guard let value = Int(octal, radix: 8) else {
-                return "\\(octal)"
-            }
-            let scalar = Unicode.Scalar(value)!
-
-            assert(scalar.isASCII)
-
-            if let name = scalar.properties.name, name != "" {
-                return name
-            }
-
-            return controlCharacters[value] ?? "\\(octal)"
-        } else if key.contains("#") {
-            return "Num \(key.last!.uppercased())"
-        } else {
-            return controlCharacters[Int(key.unicodeScalars.last!.value)] ?? key.last!.uppercased()
-        }
-    }
-
-    var rawKey: String {
-        if key.isEmpty {
-            return "\"\""
         }
 
-        let scalar = key.unicodeScalars.last!.value
-
-        let s: String
-        if let match = key.dropLast().firstMatch(of: /\\\d+/) {
-            s = String(match.0)
-        } else if scalar >= 0xf700 && scalar <= 0xf8ff {
-            s = "\\u{\(String(format: "%x", scalar))}"
-        } else if let cc = escapedControlCharacters[Int(scalar)] {
-            s = cc
-        } else if key.last == "\"" {
-            s = "\\\""
-        } else {
-            s = String(key.last!)
-        }
-
-        return "\"" + key.dropLast() + s + "\""
-    }
-
-    var attributedRawKey: AttributedString {
-        if key.isEmpty {
-            var attrStr = AttributedString("\"\"")
-            attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
-            return attrStr
-        }
-
-        let scalar = key.unicodeScalars.last!.value
-
-        let s: String
-        if let match = key.dropLast().firstMatch(of: /\\\d+/) {
-            s = String(match.0)
-        } else if scalar >= 0xf700 && scalar <= 0xf8ff {
-            s = "\\u{\(String(format: "%x", scalar))}"
-        } else if let cc = escapedControlCharacters[Int(scalar)] {
-            s = cc
-        } else if key.last == "\"" {
-            s = "\\\""
-        } else {
-            var k = AttributedString(key)
-            if modifierCount == key.count {
-                k.backgroundColor = .systemRed.withSystemEffect(.disabled)
-            }
-
-            let q = AttributedString("\"")
-            var attrStr = q + k + q
-            attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
-            return attrStr
-        }
-
-        var special = AttributedString(s)
-        if s != " " {
-            special.backgroundColor = .quaternaryLabelColor
-        }
-
-        let prefix = AttributedString("\"" + key.dropLast())
-        let suffix = AttributedString("\"")
-        var attrStr = prefix + special + suffix
-        attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
-
-        return attrStr
+        return controlCharacters[value] ?? "\\(octal)"
+    } else if key.contains("#") {
+        return "Num \(key.last!.uppercased())"
+    } else {
+        return controlCharacters[Int(key.unicodeScalars.last!.value)] ?? key.last!.uppercased()
     }
 }
 
+fileprivate func parseRawKey(_ key: String) -> String {
+    if key.isEmpty {
+        return "\"\""
+    }
+
+    let scalar = key.unicodeScalars.last!.value
+
+    let s: String
+    if let match = key.dropLast().firstMatch(of: /\\\d+/) {
+        s = String(match.0)
+    } else if scalar >= 0xf700 && scalar <= 0xf8ff {
+        s = "\\u{\(String(format: "%x", scalar))}"
+    } else if let cc = escapedControlCharacters[Int(scalar)] {
+        s = cc
+    } else if key.last == "\"" {
+        s = "\\\""
+    } else {
+        s = String(key.last!)
+    }
+
+    return "\"" + key.dropLast() + s + "\""
+}
+
+fileprivate func parseAttributedRawKey(_ key: String) -> AttributedString {
+    if key.isEmpty {
+        var attrStr = AttributedString("\"\"")
+        attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
+        return attrStr
+    }
+
+    let scalar = key.unicodeScalars.last!.value
+
+    let s: String
+    if let match = key.dropLast().firstMatch(of: /\\\d+/) {
+        s = String(match.0)
+    } else if scalar >= 0xf700 && scalar <= 0xf8ff {
+        s = "\\u{\(String(format: "%x", scalar))}"
+    } else if let cc = escapedControlCharacters[Int(scalar)] {
+        s = cc
+    } else if key.last == "\"" {
+        s = "\\\""
+    } else {
+        var k = AttributedString(key)
+        if modifierCount(key) == key.count {
+            k.backgroundColor = .systemRed.withSystemEffect(.disabled)
+        }
+
+        let q = AttributedString("\"")
+        var attrStr = q + k + q
+        attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
+        return attrStr
+    }
+
+    var special = AttributedString(s)
+    if s != " " {
+        special.backgroundColor = .quaternaryLabelColor
+    }
+
+    let prefix = AttributedString("\"" + key.dropLast())
+    let suffix = AttributedString("\"")
+    var attrStr = prefix + special + suffix
+    attrStr.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
+
+    return attrStr
+}
+
+struct KeyBinding {
+    let key: String
+    let actions: [String]
+    let modifiers: String
+    let keyWithoutModifiers: String
+    let rawKey: String
+    let attributedRawKey: AttributedString
+    let formattedActions: String
+
+    init(key: String, actions: [String]) {
+        self.key = key
+        self.actions = actions
+        self.modifiers = parseModifiers(key)
+        self.keyWithoutModifiers = parseKeyWithoutModifiers(key)
+        self.rawKey = parseRawKey(key)
+        self.attributedRawKey = parseAttributedRawKey(key)
+        self.formattedActions = actions.joined(separator: ", ")
+    }
+}
+
+extension KeyBinding: Identifiable {
+    var id: String { key }
+}
+
+extension KeyBinding: Equatable {
+    static func == (lhs: KeyBinding, rhs: KeyBinding) -> Bool {
+        return lhs.key == rhs.key
+    }
+}

@@ -1,4 +1,4 @@
-<img srcset="/icon.png?raw=true 2x" alt="The KeyBinding Inspector icon">
+<img src="/icon.png?raw=true" srcset="/icon@2x.png?raw=true 2x" alt="The KeyBinding Inspector icon">
 
 # KeyBinding Inspector
 

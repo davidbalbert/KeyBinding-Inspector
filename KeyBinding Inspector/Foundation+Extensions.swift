@@ -7,19 +7,6 @@
 
 import Foundation
 
-extension Data {
-    init(asyncContentsOf url: URL, options: Data.ReadingOptions = []) async throws {
-        self = try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.global(qos: .background).async {
-                let res = Result {
-                    try Data(contentsOf: url, options: options)
-                }
-                continuation.resume(with: res)
-            }
-        }
-    }
-}
-
 extension AttributedStringProtocol {
     func ranges<T>(of stringToFind: T, options: String.CompareOptions = [], locale: Locale? = nil) -> [Range<AttributedString.Index>] where T: StringProtocol {
         var ranges: [Range<AttributedString.Index>] = []

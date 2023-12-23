@@ -8,8 +8,7 @@
 import Cocoa
 import SwiftUI
 
-@main
-@MainActor
+@main @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
     var updaterState: UpdaterState = UpdaterState()
     var updaterWindow: NSWindow?
@@ -96,7 +95,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Task {
         //     do {
-        //         let _ = try await NSWorkspace.shared.open(helpURL, configuration: .init())
+        //         let _ = try await NSWorkspace.shared.open(repositoryURL, configuration: .init())
         //     } catch {
         //         let alert = NSAlert(error: error)
         //         alert.runModal()
@@ -105,10 +104,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         NSWorkspace.shared.open(repositoryURL, configuration: .init()) { _, error in
             if let error {
-                DispatchQueue.main.async {
-                    let alert = NSAlert(error: error)
-                    alert.runModal()
-                }
+                let alert = NSAlert(error: error)
+                alert.runModal()
             }
         }
     }

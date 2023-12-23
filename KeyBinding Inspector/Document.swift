@@ -11,7 +11,7 @@ import CryptoKit
 
 class Document: NSDocument {
     @Observable
-    class Content {
+    final class Content {
         var keyBindings: [KeyBinding]
 
         convenience init() {
@@ -21,32 +21,10 @@ class Document: NSDocument {
         init(_ keyBindings: [KeyBinding]) {
             self.keyBindings = keyBindings
         }
-
-        init(contentsOf data: Data) throws {
-            guard let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) else {
-                throw CocoaError(.fileReadCorruptFile)
-            }
-
-            guard let dict = plist as? [String: Any] else {
-                throw CocoaError(.fileReadCorruptFile)
-            }
-
-            keyBindings = dict.map { (key, value) in
-                let actions: [String]
-                if let s = value as? String {
-                    actions = [s]
-                } else if let a = value as? [String] {
-                    actions = a
-                } else {
-                    actions = []
-                }
-                return KeyBinding(key: key, actions: actions)
-            }
-        }
     }
 
     var content: Content = Content()
-    var digest: SHA256.Digest?
+    var digest: Data? // SHA256Digest
 
     override class func canConcurrentlyReadDocuments(ofType typeName: String) -> Bool {
         true
@@ -93,8 +71,13 @@ class Document: NSDocument {
     }
     
     override func read(from data: Data, ofType typeName: String) throws {
-        content.keyBindings = try Content(contentsOf: data).keyBindings
-        digest = SHA256.hash(data: data)
+        let kb = try Array<KeyBinding>(contentsOf: data)
+        let d = Data(SHA256.hash(data: data))
+
+        Task.detached { @MainActor [self] in
+            content.keyBindings = kb
+            digest = d
+        }
     }
 
     override func presentedItemDidChange() {
@@ -109,11 +92,10 @@ class Document: NSDocument {
                 return
             }
 
-            let d = SHA256.hash(data: data)
+            let d = Data(SHA256.hash(data: data))
 
-            if digest != d {
-                DispatchQueue.main.async { [self] in
-                    digest = d
+            Task.detached { @MainActor [self] in
+                if digest == nil || Data(digest!) == d {
                     do {
                         try revert(toContentsOf: url, ofType: fileType)
                     } catch {

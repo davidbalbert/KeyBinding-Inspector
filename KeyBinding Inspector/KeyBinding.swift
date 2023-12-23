@@ -321,3 +321,30 @@ extension KeyBinding: Equatable {
         return lhs.key == rhs.key
     }
 }
+
+extension Array<KeyBinding> {
+    init(contentsOf data: Data) throws {
+        guard let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) else {
+            throw CocoaError(.fileReadCorruptFile)
+        }
+
+        guard let dict = plist as? [String: Any] else {
+            throw CocoaError(.fileReadCorruptFile)
+        }
+
+        let keyBindings = dict.map { (key, value) in
+            let actions: [String]
+            if let s = value as? String {
+                actions = [s]
+            } else if let a = value as? [String] {
+                actions = a
+            } else {
+                actions = []
+            }
+            return KeyBinding(key: key, actions: actions)
+        }
+
+        self.init(keyBindings)
+    }
+}
+
